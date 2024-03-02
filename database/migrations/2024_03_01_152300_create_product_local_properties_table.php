@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Product;
+use App\Models\Store;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,13 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', static function (Blueprint $table) {
+        Schema::create('product_local_properties', static function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignIdFor(Product::class, 'product_id')->constrained();
+            $table->foreignIdFor(Store::class, 'store_id')->constrained();
+            $table->integer('available_quantity')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('product_local_properties');
     }
 };
