@@ -29,10 +29,24 @@ class StockController extends Controller
     {
         $request->validate([
             'retailer_id' => 'required|exists:users,id',
+            'store_id' => 'required|exists:stores,id',
         ]);
 
         $stock = new Stock();
         $stock->retailer_id = $request->retailer_id;
+        $stock->store_id = $request->store_id;
+        $stock->save();
+
+        return new StockResource($stock);
+    }
+
+    public function update(Request $request, Stock $stock): StockResource
+    {
+        $request->validate([
+            'validated' => 'required',
+        ]);
+
+        $stock->validated = $request->validated;
         $stock->save();
 
         return new StockResource($stock);

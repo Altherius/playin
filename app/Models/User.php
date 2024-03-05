@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * @property string $id A UUID identifying the user.
+ * @property string $id An ID identifying the user.
  */
 class User extends Authenticatable
 {

@@ -54,7 +54,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Order $order): OrderResource
     {
         $request->validate([
             'validated' => 'required',

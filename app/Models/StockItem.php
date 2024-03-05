@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $product_id
+ * @property Product $product
+ * @property int $stock_id
+ * @property Stock $stock
+ * @property int $quantity
+ * @property float $unit_price
+ */
 class StockItem extends Model
 {
     use HasFactory;
@@ -15,8 +24,8 @@ class StockItem extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function order(): BelongsTo
+    public function stock(): BelongsTo
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Stock::class);
     }
 }

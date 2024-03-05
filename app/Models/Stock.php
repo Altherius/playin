@@ -2,11 +2,18 @@
 
 namespace App\Models;
 
+use App\Events\StockValidated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property bool $validated
+ * @property int $store_id
+ * @property int $retailer_id
+ */
 class Stock extends Model
 {
     use HasFactory;
@@ -20,4 +27,13 @@ class Stock extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    protected $dispatchesEvents = [
+        'updating' => StockValidated::class,
+    ];
 }

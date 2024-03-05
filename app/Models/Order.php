@@ -9,7 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
+ * @property int $id
  * @property OrderItem[] $items
+ * @property Store $store
+ * @property int $store_id
+ * @property User $customer
+ * @property int $customer_id
  */
 class Order extends Model
 {
@@ -23,6 +28,11 @@ class Order extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
     }
 
     protected $dispatchesEvents = [

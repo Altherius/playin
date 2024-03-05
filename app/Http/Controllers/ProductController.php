@@ -6,6 +6,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -28,9 +29,20 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): ProductResource
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required|gte:0',
+        ]);
+
+        $product = new Product();
+        $product->name = $request->name;
+        $product->slug = Str::slug($request->name);
+        $product->price = $request->price;
+        $product->save();
+
+        return new ProductResource($product);
     }
 
     /**
@@ -52,9 +64,19 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product): ProductResource
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required|gte:0',
+        ]);
+
+        $product->name = $request->name;
+        $product->slug = Str::slug($request->name);
+        $product->price = $request->price;
+        $product->save();
+
+        return new ProductResource($product);
     }
 
     /**

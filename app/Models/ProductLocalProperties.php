@@ -17,6 +17,6 @@ class ProductLocalProperties extends Model
 
     protected $fillable = [
         'product_id',
-        'store_id'
+        'store_id',
     ];
 }
