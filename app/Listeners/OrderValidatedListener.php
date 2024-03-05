@@ -47,7 +47,6 @@ class OrderValidatedListener
                     'store_id' => $event->order->store_id,
                 ]);
 
-
                 $localProperties->available_quantity -= $item->quantity;
                 $localProperties->save();
             }

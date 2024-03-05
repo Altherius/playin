@@ -6,8 +6,6 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductLocalProperties;
-use App\Models\Stock;
-use App\Models\StockItem;
 use App\Models\Store;
 use App\Models\User;
 use Tests\TestCase;
@@ -46,7 +44,6 @@ class OrdersValidationTest extends TestCase
             'product_id' => $item->product_id,
             'store_id' => $store->id,
         ]);
-
 
         $this->assertEquals($localProperties->available_quantity, 7);
     }
