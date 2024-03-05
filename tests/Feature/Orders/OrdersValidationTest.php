@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductLocalProperties;
 use App\Models\Store;
 use App\Models\User;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Tests\TestCase;
 
 class OrdersValidationTest extends TestCase
@@ -46,5 +47,43 @@ class OrdersValidationTest extends TestCase
         ]);
 
         $this->assertEquals($localProperties->available_quantity, 7);
+    }
+
+    public function test_order_validation_without_required_quantity_is_disallowed(): void
+    {
+        $customer = User::factory()->create();
+        $store = Store::factory()->create();
+        $product = Product::factory()->create();
+
+        $order = new Order();
+        $order->customer_id = $customer->id;
+        $order->store_id = $store->id;
+        $order->validated = false;
+        $order->save();
+
+        $item = new OrderItem();
+        $item->order_id = $order->id;
+        $item->product_id = $product->id;
+        $item->quantity = 3;
+        $item->unit_price = 19.9;
+        $item->save();
+
+        $localProperties = new ProductLocalProperties();
+        $localProperties->product_id = $item->product_id;
+        $localProperties->store_id = $store->id;
+        $localProperties->available_quantity = 2;
+        $localProperties->save();
+
+        $order->validated = true;
+
+        $this->expectException(UnprocessableEntityHttpException::class);
+        $order->save();
+
+        $localProperties = ProductLocalProperties::firstOrCreate([
+            'product_id' => $item->product_id,
+            'store_id' => $store->id,
+        ]);
+
+        $this->assertEquals($localProperties->available_quantity, 2);
     }
 }

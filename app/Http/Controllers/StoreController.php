@@ -2,64 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StoreResource;
 use App\Models\Store;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class StoreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        //
+        return StoreResource::collection(Store::paginate());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(Request $request): StoreResource
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $store = new Store();
+        $store->name = $request->name;
+        $store->save();
+
+        return new StoreResource($store);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show(Store $store): StoreResource
     {
-        //
+        return new StoreResource($store);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Store $store)
+    public function update(Request $request, Store $store): StoreResource
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required',
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Store $store)
-    {
-        //
-    }
+        $store->name = $request->name;
+        $store->save();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Store $store)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Store $store)
-    {
-        //
+        return new StoreResource($store);
     }
 }

@@ -2,64 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StockResource;
 use App\Models\StockItem;
 use Illuminate\Http\Request;
 
 class StockItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function store(Request $request): StockResource
     {
-        //
+        $request->validate([
+            'stock_id' => 'required|exists:stocks,id',
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'gte:1',
+            'unit_price' => 'required|min:0',
+        ]);
+
+        $item = new StockItem();
+
+        $item->stock_id = $request->stock_id;
+        $item->product_id = $request->product_id;
+        $item->quantity = $request->quantity;
+        $item->unit_price = $request->unit_price;
+
+        $item->save();
+
+        return new StockResource($item->stock);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function update(Request $request, StockItem $item): StockResource
     {
-        //
-    }
+        $request->validate([
+            'stock_id' => 'required|exists:stocks,id',
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'gte:1',
+            'unit_price' => 'required|min:0',
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $item->stock_id = $request->stock_id;
+        $item->product_id = $request->product_id;
+        $item->quantity = $request->quantity;
+        $item->unit_price = $request->unit_price;
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(StockItem $stockItem)
-    {
-        //
-    }
+        $item->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(StockItem $stockItem)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, StockItem $stockItem)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(StockItem $stockItem)
-    {
-        //
+        return new StockResource($item->stock);
     }
 }

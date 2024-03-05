@@ -9,17 +9,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class StockController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): AnonymousResourceCollection
     {
         return StockResource::collection(Stock::paginate());
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Stock $stock): StockResource
     {
         return new StockResource($stock);

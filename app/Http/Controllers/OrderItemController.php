@@ -8,25 +8,6 @@ use Illuminate\Http\Request;
 
 class OrderItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request): OrderResource
     {
         $request->validate([
@@ -36,38 +17,19 @@ class OrderItemController extends Controller
             'unit_price' => 'required|min:0',
         ]);
 
-        $orderItem = new OrderItem();
+        $item = new OrderItem();
 
-        $orderItem->order_id = $request->order_id;
-        $orderItem->product_id = $request->product_id;
-        $orderItem->quantity = $request->quantity;
-        $orderItem->unit_price = $request->unit_price;
+        $item->order_id = $request->order_id;
+        $item->product_id = $request->product_id;
+        $item->quantity = $request->quantity;
+        $item->unit_price = $request->unit_price;
 
-        $orderItem->save();
+        $item->save();
 
-        return new OrderResource($orderItem->order);
+        return new OrderResource($item->order);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(OrderItem $orderItem)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(OrderItem $orderItem)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, OrderItem $orderItem)
+    public function update(Request $request, OrderItem $item): OrderResource
     {
         $request->validate([
             'order_id' => 'required',
@@ -76,21 +38,13 @@ class OrderItemController extends Controller
             'unit_price' => 'required|min:0',
         ]);
 
-        $orderItem->order_id = $request->order_id;
-        $orderItem->product_id = $request->product_id;
-        $orderItem->quantity = $request->quantity;
-        $orderItem->unit_price = $request->unit_price;
+        $item->order_id = $request->order_id;
+        $item->product_id = $request->product_id;
+        $item->quantity = $request->quantity;
+        $item->unit_price = $request->unit_price;
 
-        $orderItem->save();
+        $item->save();
 
-        return new OrderResource($orderItem->order);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(OrderItem $orderItem)
-    {
-        //
+        return new OrderResource($item->order);
     }
 }
