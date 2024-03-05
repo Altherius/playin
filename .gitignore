@@ -3,7 +3,9 @@
 /public/build
 /public/hot
 /public/storage
+/public/docs
 /storage/*.key
+.scribe/*
 /vendor
 .env
 .env.backup

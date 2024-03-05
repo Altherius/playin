@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('users', UserController::class);
-Route::apiResource('products', ProductController::class);
-Route::apiResource('stocks', StockController::class);
-Route::apiResource('orders', OrderController::class);
-Route::apiResource('stores', StoreController::class);
+Route::apiResource('users', UserController::class)->only('index', 'show', 'create');
+Route::apiResource('products', ProductController::class)->except('destroy');
+Route::apiResource('stocks', StockController::class)->except('destroy');
+Route::apiResource('orders', OrderController::class)->except('destroy');
+Route::apiResource('stores', StoreController::class)->except('destroy');
 Route::apiResource('stock-items', StockItemController::class)->only('store', 'update');
 Route::apiResource('order-items', OrderItemController::class)->only('store', 'update');
