@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProductController;
@@ -19,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::post('/token', [ApiTokenController::class, 'token']);
+Route::get('/me', [UserController::class, 'me'])->middleware('auth:sanctum');
 
 Route::apiResource('users', UserController::class)->only('index', 'show', 'create');
 Route::apiResource('products', ProductController::class)->except('destroy');
