@@ -29,6 +29,7 @@ class OrderResource extends JsonResource
             'validated' => $this->validated,
             'total_price' => round($this->items->reduce(fn ($carry, $item) => $carry + ($item->quantity * $item->unit_price), 0), 2),
             'items' => OrderItemResource::collection($this->items),
+            'address' => new AddressResource($this->address),
             'links' => [
                 'show' => route('orders.show', [$this->id]),
             ],

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Address;
 use App\Models\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,6 +23,7 @@ class StockFactory extends Factory
             'validated' => false,
             'retailer_id' => User::factory(),
             'store_id' => Store::factory(),
+            'address_id' => Address::factory(),
         ];
     }
 
