@@ -13,7 +13,7 @@ use Knuckles\Scribe\Attributes\Group;
 #[Group('Users', 'Operations related to users')]
 class ApiTokenController extends Controller
 {
-    #[Endpoint("Retrieve an API Token")]
+    #[Endpoint('Retrieve an API Token')]
     public function token(Request $request): JsonResponse
     {
         $request->validate([
@@ -24,7 +24,7 @@ class ApiTokenController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);

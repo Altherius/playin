@@ -20,13 +20,7 @@ class OrdersTest extends TestCase
 
     public function test_orders_page_is_available(): void
     {
-        $customer = User::factory()->create();
-        $store = Store::factory()->create();
-
-        $order = new Order();
-        $order->customer_id = $customer->id;
-        $order->store_id = $store->id;
-        $order->save();
+        $order = Order::factory()->create();
 
         $response = $this->get("/api/orders/$order->id");
         $response->assertOk();
@@ -47,13 +41,7 @@ class OrdersTest extends TestCase
 
     public function test_orders_can_be_updated(): void
     {
-        $customer = User::factory()->create();
-        $store = Store::factory()->create();
-
-        $order = new Order();
-        $order->customer_id = $customer->id;
-        $order->store_id = $store->id;
-        $order->save();
+        $order = Order::factory()->create();
 
         $response = $this->put("/api/orders/$order->id", [
             'validated' => false,

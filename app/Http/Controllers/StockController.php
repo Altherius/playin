@@ -15,22 +15,22 @@ use Knuckles\Scribe\Attributes\QueryParam;
 
 class StockController extends Controller
 {
-    #[Endpoint("Retrieve a collection of stocks")]
-    #[QueryParam("page", "int", "The page number", required: false, example: 1)]
+    #[Endpoint('Retrieve a collection of stocks')]
+    #[QueryParam('page', 'int', 'The page number', required: false, example: 1)]
     public function index(): AnonymousResourceCollection
     {
         return StockResource::collection(Stock::paginate());
     }
 
-    #[Endpoint("Retrieve a stock")]
+    #[Endpoint('Retrieve a stock')]
     public function show(Stock $stock): StockResource
     {
         return new StockResource($stock);
     }
 
-    #[Endpoint("Create a stock")]
-    #[BodyParam("retailer_id", "int", "The id of the user who is the retailer of the stock.", example: 1)]
-    #[BodyParam("store_id", "int", "The id of the store related to the stock.", example: 1)]
+    #[Endpoint('Create a stock')]
+    #[BodyParam('retailer_id', 'int', 'The id of the user who is the retailer of the stock.', example: 1)]
+    #[BodyParam('store_id', 'int', 'The id of the store related to the stock.', example: 1)]
     public function store(Request $request): StockResource
     {
         $request->validate([
@@ -46,8 +46,8 @@ class StockController extends Controller
         return new StockResource($stock);
     }
 
-    #[Endpoint("Edit a stock")]
-    #[BodyParam("validated", "bool", "true if the stock is validated and the products must be added to local stock, false otherwise.")]
+    #[Endpoint('Edit a stock')]
+    #[BodyParam('validated', 'bool', 'true if the stock is validated and the products must be added to local stock, false otherwise.')]
     public function update(Request $request, Stock $stock): StockResource
     {
         $request->validate([

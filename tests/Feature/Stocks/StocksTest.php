@@ -20,13 +20,7 @@ class StocksTest extends TestCase
 
     public function test_stocks_page_is_available(): void
     {
-        $retailer = User::factory()->create();
-        $store = Store::factory()->create();
-
-        $stock = new Stock();
-        $stock->retailer_id = $retailer->id;
-        $stock->store_id = $store->id;
-        $stock->save();
+        $stock = Stock::factory()->create();
 
         $response = $this->get("/api/stocks/$stock->id");
         $response->assertOk();
@@ -47,13 +41,7 @@ class StocksTest extends TestCase
 
     public function test_stocks_can_be_updated(): void
     {
-        $retailer = User::factory()->create();
-        $store = Store::factory()->create();
-
-        $stock = new Stock();
-        $stock->retailer_id = $retailer->id;
-        $stock->store_id = $store->id;
-        $stock->save();
+        $stock = Stock::factory()->create();
 
         $response = $this->put("/api/stocks/$stock->id", [
             'validated' => false,

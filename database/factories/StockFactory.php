@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Store;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,19 @@ class StockFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'validated' => false,
+            'retailer_id' => User::factory(),
+            'store_id' => Store::factory(),
         ];
+    }
+
+    /**
+     * Indicate that the order should be validated.
+     */
+    public function validated(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'validated' => true,
+        ]);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class StockItemFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'stock_id' => Stock::factory(),
+            'product_id' => Product::factory(),
+            'quantity' => fake()->numberBetween(5, 10),
+            'unit_price' => fake()->randomFloat(2, 10, 20),
         ];
     }
 }

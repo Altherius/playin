@@ -37,25 +37,11 @@ class OrderItemsTest extends TestCase
 
     public function test_order_items_can_be_updated(): void
     {
-        $customer = User::factory()->create();
-        $store = Store::factory()->create();
-        $product = Product::factory()->create();
-
-        $order = new Order();
-        $order->customer_id = $customer->id;
-        $order->store_id = $store->id;
-        $order->save();
-
-        $item = new OrderItem();
-        $item->order_id = $order->id;
-        $item->product_id = $product->id;
-        $item->quantity = 5;
-        $item->unit_price = 19.9;
-        $item->save();
+        $item = OrderItem::factory()->create();
 
         $response = $this->put("/api/order-items/$item->id", [
-            'order_id' => $order->id,
-            'product_id' => $product->id,
+            'order_id' => $item->order_id,
+            'product_id' => $item->product_id,
             'quantity' => 3,
             'unit_price' => 14.9,
         ]);

@@ -15,15 +15,15 @@ use Knuckles\Scribe\Attributes\QueryParam;
 
 class StoreController extends Controller
 {
-    #[Endpoint("Retrieve a collection of stores")]
-    #[QueryParam("page", "int", "The page number", required: false, example: 1)]
+    #[Endpoint('Retrieve a collection of stores')]
+    #[QueryParam('page', 'int', 'The page number', required: false, example: 1)]
     public function index(): AnonymousResourceCollection
     {
         return StoreResource::collection(Store::paginate());
     }
 
-    #[Endpoint("Create a store")]
-    #[BodyParam("name", "string", "The name of the store.", example: "Playin Paris BNF")]
+    #[Endpoint('Create a store')]
+    #[BodyParam('name', 'string', 'The name of the store.', example: 'Playin Paris BNF')]
     public function store(Request $request): StoreResource
     {
         $request->validate([
@@ -37,14 +37,14 @@ class StoreController extends Controller
         return new StoreResource($store);
     }
 
-    #[Endpoint("Retrieve a store")]
+    #[Endpoint('Retrieve a store')]
     public function show(Store $store): StoreResource
     {
         return new StoreResource($store);
     }
 
-    #[Endpoint("Edit a store")]
-    #[BodyParam("name", "string", "The name of the edited store.", example: "Playin Paris BNF")]
+    #[Endpoint('Edit a store')]
+    #[BodyParam('name', 'string', 'The name of the edited store.', example: 'Playin Paris BNF')]
     public function update(Request $request, Store $store): StoreResource
     {
         $request->validate([
