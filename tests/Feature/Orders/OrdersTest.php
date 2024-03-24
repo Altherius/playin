@@ -45,8 +45,42 @@ class OrdersTest extends TestCase
 
         $response = $this->put("/api/orders/$order->id", [
             'validated' => false,
-        ]);
+            'sent' => false,
+            'received' => false,
+        ],
+            ['Accept' => 'application/json']
+        );
 
         $response->assertOk();
+    }
+
+    public function test_orders_cannot_be_received_if_not_sent(): void
+    {
+        $order = Order::factory()->create();
+
+        $response = $this->put("/api/orders/$order->id", [
+            'validated' => false,
+            'sent' => false,
+            'received' => true,
+        ],
+            ['Accept' => 'application/json']
+        );
+
+        $response->assertUnprocessable();
+    }
+
+    public function test_orders_cannot_be_sent_if_not_validated(): void
+    {
+        $order = Order::factory()->create();
+
+        $response = $this->put("/api/orders/$order->id", [
+            'validated' => false,
+            'sent' => true,
+            'received' => true,
+        ],
+            ['Accept' => 'application/json']
+        );
+
+        $response->assertUnprocessable();
     }
 }
