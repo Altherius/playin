@@ -36,4 +36,28 @@ class StockFactory extends Factory
             'validated' => true,
         ]);
     }
+
+    /**
+     * Indicate that the stock should be sent.
+     */
+    public function sent(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'validated' => true,
+            'sent' => true,
+
+        ]);
+    }
+
+    /**
+     * Indicate that the stock should be received.
+     */
+    public function received(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'validated' => true,
+            'sent' => true,
+            'received' => true,
+        ]);
+    }
 }

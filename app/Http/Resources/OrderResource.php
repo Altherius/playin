@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Address;
 use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,8 +12,11 @@ use Illuminate\Support\Collection;
 /**
  * @property int $id
  * @property bool $validated
+ * @property bool $sent
+ * @property bool $received
  * @property User $customer
  * @property Collection<OrderItem> $items
+ * @property Address $address
  */
 class OrderResource extends JsonResource
 {
@@ -27,6 +31,8 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'customer' => route('users.show', [$this->customer]),
             'validated' => $this->validated,
+            'sent' => $this->sent,
+            'received' => $this->received,
             'total_price' => round($this->items->reduce(fn ($carry, $item) => $carry + ($item->quantity * $item->unit_price), 0), 2),
             'items' => OrderItemResource::collection($this->items),
             'address' => new AddressResource($this->address),

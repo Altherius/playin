@@ -19,6 +19,8 @@ return new class extends Migration
                 ->constrained()->references('id')->on('users');
             $table->foreignIdFor(Store::class, 'store_id')->constrained();
             $table->boolean('validated')->default(false);
+            $table->boolean('sent')->default(false);
+            $table->boolean('received')->default(false);
             $table->timestamps();
         });
     }
