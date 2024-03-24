@@ -35,7 +35,7 @@ class AddressController extends Controller
 
         $address = new Address();
         $address = $this->hydrateAddress($address, $request);
-        $address->user = $user;
+        $address->user_id = $user->id;
         $address->save();
 
         return new AddressResource($address);
