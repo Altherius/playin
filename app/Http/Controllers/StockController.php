@@ -48,13 +48,19 @@ class StockController extends Controller
 
     #[Endpoint('Edit a stock')]
     #[BodyParam('validated', 'bool', 'true if the stock is validated and the products must be added to local stock, false otherwise.')]
+    #[BodyParam('sent', 'bool', 'true if the stock is sent, false otherwise.')]
+    #[BodyParam('sent', 'bool', 'true if the stock is received, false otherwise.')]
     public function update(Request $request, Stock $stock): StockResource
     {
         $request->validate([
-            'validated' => 'required',
+            'validated' => 'required|boolean|accepted_if:sent,true',
+            'sent' => 'required|boolean|accepted_if:received,true',
+            'received' => 'required|boolean',
         ]);
 
         $stock->validated = $request->validated;
+        $stock->sent = $request->sent;
+        $stock->received = $request->received;
         $stock->save();
 
         return new StockResource($stock);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
@@ -24,6 +25,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('/token', [ApiTokenController::class, 'token']);
 Route::get('/me', [UserController::class, 'me'])->middleware('auth:sanctum');
 
+Route::post('/users/{user}/addresses', [AddressController::class, 'addCustomerAddress']);
+Route::post('/orders/{order}/addresses', [AddressController::class, 'addOrderAddress']);
+Route::post('/stocks/{stock}/addresses', [AddressController::class, 'addStockAddress']);
+
+Route::apiResource('addresses', AddressController::class)->only('show', 'update', 'destroy');
 Route::apiResource('users', UserController::class)->only('index', 'show', 'create');
 Route::apiResource('products', ProductController::class)->except('destroy');
 Route::apiResource('stocks', StockController::class)->except('destroy');

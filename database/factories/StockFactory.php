@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Address;
 use App\Models\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,6 +23,7 @@ class StockFactory extends Factory
             'validated' => false,
             'retailer_id' => User::factory(),
             'store_id' => Store::factory(),
+            'address_id' => Address::factory(),
         ];
     }
 
@@ -32,6 +34,30 @@ class StockFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'validated' => true,
+        ]);
+    }
+
+    /**
+     * Indicate that the stock should be sent.
+     */
+    public function sent(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'validated' => true,
+            'sent' => true,
+
+        ]);
+    }
+
+    /**
+     * Indicate that the stock should be received.
+     */
+    public function received(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'validated' => true,
+            'sent' => true,
+            'received' => true,
         ]);
     }
 }

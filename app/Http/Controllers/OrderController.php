@@ -47,13 +47,19 @@ class OrderController extends Controller
 
     #[Endpoint('Edit an order')]
     #[BodyParam('validated', 'bool', 'true if the stock is validated and the products must be deduced from local stock, false otherwise.')]
+    #[BodyParam('sent', 'bool', 'true if the stock is sent, false otherwise.')]
+    #[BodyParam('sent', 'bool', 'true if the stock is received, false otherwise.')]
     public function update(Request $request, Order $order): OrderResource
     {
         $request->validate([
-            'validated' => 'required',
+            'validated' => 'required|boolean|accepted_if:sent,true',
+            'sent' => 'required|boolean|accepted_if:received,true',
+            'received' => 'required|boolean',
         ]);
 
         $order->validated = $request->validated;
+        $order->sent = $request->sent;
+        $order->received = $request->received;
         $order->save();
 
         return new OrderResource($order);

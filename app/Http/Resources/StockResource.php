@@ -25,8 +25,12 @@ class StockResource extends JsonResource
         return [
             'id' => $this->id,
             'retailer' => route('users.show', [$this->retailer->id]),
+            'validated' => $request->validated,
+            'sent' => $request->sent,
+            'received' => $request->received,
             'total_price' => $this->items->reduce(fn ($carry, $item) => $carry + ($item->quantity * $item->unit_price), 0),
             'items' => StockItemResource::collection($this->items),
+            'address' => new AddressResource($this->address),
             'links' => [
                 'show' => route('stocks.show', [$this->id]),
             ],
