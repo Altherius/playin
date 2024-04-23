@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Address extends Model
 {
+    use HasFactory;
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -22,6 +24,4 @@ class Address extends Model
     {
         return $this->belongsTo(Stock::class);
     }
-
-    use HasFactory;
 }

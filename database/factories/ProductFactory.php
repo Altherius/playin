@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\CardGame;
+use App\Enums\ProductType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -21,6 +23,8 @@ class ProductFactory extends Factory
             'name' => ucfirst($name = fake()->words(fake()->numberBetween(2, 3), true)),
             'slug' => Str::slug($name),
             'price' => round(10 * fake()->randomFloat(2, 10, 100)) / 10,
+            'card_game' => fake()->randomElement(CardGame::cases())->value,
+            'product_type' => fake()->randomElement(ProductType::cases())->value,
         ];
     }
 }
