@@ -20,7 +20,7 @@ class CardPrintStateResource extends JsonResource
         return [
             'id' => $this->id,
             'grading' => $this->grading,
-            'language' => $this->language
+            'language' => $this->language,
         ];
     }
 }

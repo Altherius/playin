@@ -26,4 +26,19 @@ class Product extends Model
     {
         return $this->hasOne(CardPropertiesMagic::class);
     }
+
+    public function card_properties_yugioh(): HasOne
+    {
+        return $this->hasOne(CardPropertiesYugioh::class);
+    }
+
+    public function card_properties_fab(): HasOne
+    {
+        return $this->hasOne(CardPropertiesFab::class);
+    }
+
+    public function card_properties_lorcana(): HasOne
+    {
+        return $this->hasOne(CardPropertiesLorcana::class);
+    }
 }

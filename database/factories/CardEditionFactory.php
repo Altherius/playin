@@ -20,7 +20,7 @@ class CardEditionFactory extends Factory
         return [
             'name' => fake()->name,
             'card_game' => fake()->randomElement(CardGame::cases())->value,
-            'released_at' => fake()->dateTimeThisDecade()
+            'released_at' => fake()->dateTimeThisDecade(),
         ];
     }
 }

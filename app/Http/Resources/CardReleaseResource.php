@@ -6,6 +6,12 @@ use App\Models\CardEdition;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property int $id
+ * @property int $card_edition_id
+ * @property string $collection_number
+ * @property string $artist
+ */
 class CardReleaseResource extends JsonResource
 {
     /**
@@ -19,7 +25,7 @@ class CardReleaseResource extends JsonResource
             'id' => $this->id,
             'edition' => new CardEditionResource(CardEdition::find($this->card_edition_id)),
             'collection_number' => $this->collection_number,
-            'artist' => $this->artist
+            'artist' => $this->artist,
         ];
     }
 }

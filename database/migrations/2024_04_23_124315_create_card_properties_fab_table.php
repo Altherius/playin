@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('card_properties_magic', static function (Blueprint $table) {
+        Schema::create('card_properties_fab', static function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('mana_cost');
+            $table->integer('resource_cost');
+            $table->integer('pitch');
             $table->string('type_line');
             $table->text('rules_text');
-            $table->integer('mana_value');
-            $table->float('power')->nullable();
-            $table->float('toughness')->nullable();
+            $table->integer('attack')->nullable();
+            $table->integer('defense')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('card_properties_magic');
+        Schema::dropIfExists('card_properties_lorcana');
     }
 };

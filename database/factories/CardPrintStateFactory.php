@@ -20,7 +20,7 @@ class CardPrintStateFactory extends Factory
     {
         return [
             'grading' => fake()->randomElement(CardGrading::cases())->value,
-            'language' => fake()->randomElement(CardLanguage::cases())->value
+            'language' => fake()->randomElement(CardLanguage::cases())->value,
         ];
     }
 }

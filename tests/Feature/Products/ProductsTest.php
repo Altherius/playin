@@ -29,6 +29,7 @@ class ProductsTest extends TestCase
         $response = $this->post('/api/products', [
             'name' => 'Test product',
             'price' => 29.9,
+            'card_game' => null,
         ]);
 
         $response->assertCreated();
