@@ -19,7 +19,15 @@ class ProductController extends Controller
     #[QueryParam('page', 'int', 'The page number', required: false, example: 1)]
     public function index(): AnonymousResourceCollection
     {
-        return ProductResource::collection(Product::paginate());
+        return ProductResource::collection(Product::with([
+            'card_release.card_edition',
+            'card_print_state',
+            'boardgame_properties',
+            'card_properties_magic',
+            'card_properties_yugioh',
+            'card_properties_fab',
+            'card_properties_lorcana',
+        ])->paginate());
     }
 
     #[Endpoint('Create a product')]
@@ -44,7 +52,15 @@ class ProductController extends Controller
     #[Endpoint('Retrieve a product')]
     public function show(Product $product): ProductResource
     {
-        return new ProductResource($product);
+        return new ProductResource($product->load([
+            'card_release.card_edition',
+            'card_print_state',
+            'boardgame_properties',
+            'card_properties_magic',
+            'card_properties_yugioh',
+            'card_properties_fab',
+            'card_properties_lorcana',
+        ]));
     }
 
     #[Endpoint('Edit a product')]

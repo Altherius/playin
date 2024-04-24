@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -19,5 +20,40 @@ class Product extends Model
     public function local_properties(): HasMany
     {
         return $this->hasMany(ProductLocalProperties::class);
+    }
+
+    public function boardgame_properties(): BelongsTo
+    {
+        return $this->belongsTo(BoardgameProperties::class);
+    }
+
+    public function card_properties_magic(): BelongsTo
+    {
+        return $this->belongsTo(CardPropertiesMagic::class);
+    }
+
+    public function card_properties_yugioh(): BelongsTo
+    {
+        return $this->belongsTo(CardPropertiesYugioh::class);
+    }
+
+    public function card_properties_fab(): BelongsTo
+    {
+        return $this->belongsTo(CardPropertiesFab::class);
+    }
+
+    public function card_properties_lorcana(): BelongsTo
+    {
+        return $this->belongsTo(CardPropertiesLorcana::class);
+    }
+
+    public function card_release(): BelongsTo
+    {
+        return $this->belongsTo(CardRelease::class);
+    }
+
+    public function card_print_state(): BelongsTo
+    {
+        return $this->belongsTo(CardPrintState::class);
     }
 }

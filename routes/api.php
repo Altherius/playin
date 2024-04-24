@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ApiTokenController;
+use App\Http\Controllers\CardReleaseController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProductController;
@@ -31,9 +32,11 @@ Route::post('/stocks/{stock}/addresses', [AddressController::class, 'addStockAdd
 
 Route::apiResource('addresses', AddressController::class)->only('show', 'update', 'destroy');
 Route::apiResource('users', UserController::class)->only('index', 'show', 'create');
-Route::apiResource('products', ProductController::class)->except('destroy');
 Route::apiResource('stocks', StockController::class)->except('destroy');
 Route::apiResource('orders', OrderController::class)->except('destroy');
 Route::apiResource('stores', StoreController::class)->except('destroy');
 Route::apiResource('stock-items', StockItemController::class)->only('store', 'update');
 Route::apiResource('order-items', OrderItemController::class)->only('store', 'update');
+
+Route::apiResource('card-releases', CardReleaseController::class);
+Route::apiResource('products', ProductController::class)->except('destroy');

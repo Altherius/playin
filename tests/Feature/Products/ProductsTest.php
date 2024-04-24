@@ -24,11 +24,80 @@ class ProductsTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_boardgames_page_contains_properties(): void
+    {
+        $product = Product::factory()->boardgame()->create();
+
+        $response = $this->get("/api/products/$product->id");
+
+        $response->assertOk();
+        $response->assertJsonStructure(['data' => [
+            'boardgame_properties',
+        ]]);
+    }
+
+    public function test_magic_card_page_contains_properties(): void
+    {
+        $product = Product::factory()->magic()->create();
+
+        $response = $this->get("/api/products/$product->id");
+
+        $response->assertOk();
+        $response->assertJsonStructure(['data' => [
+            'card_properties',
+            'card_release',
+            'card_print_state',
+        ]]);
+    }
+
+    public function test_yugioh_card_page_contains_properties(): void
+    {
+        $product = Product::factory()->yugioh()->create();
+
+        $response = $this->get("/api/products/$product->id");
+
+        $response->assertOk();
+        $response->assertJsonStructure(['data' => [
+            'card_properties',
+            'card_release',
+            'card_print_state',
+        ]]);
+    }
+
+    public function test_fab_card_page_contains_properties(): void
+    {
+        $product = Product::factory()->fab()->create();
+
+        $response = $this->get("/api/products/$product->id");
+
+        $response->assertOk();
+        $response->assertJsonStructure(['data' => [
+            'card_properties',
+            'card_release',
+            'card_print_state',
+        ]]);
+    }
+
+    public function test_lorcana_card_page_contains_properties(): void
+    {
+        $product = Product::factory()->lorcana()->create();
+
+        $response = $this->get("/api/products/$product->id");
+
+        $response->assertOk();
+        $response->assertJsonStructure(['data' => [
+            'card_properties',
+            'card_release',
+            'card_print_state',
+        ]]);
+    }
+
     public function test_products_can_be_created(): void
     {
         $response = $this->post('/api/products', [
             'name' => 'Test product',
             'price' => 29.9,
+            'card_game' => null,
         ]);
 
         $response->assertCreated();
