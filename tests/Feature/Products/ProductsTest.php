@@ -32,7 +32,7 @@ class ProductsTest extends TestCase
 
         $response->assertOk();
         $response->assertJsonStructure(['data' => [
-            'boardgame_properties'
+            'boardgame_properties',
         ]]);
     }
 
@@ -46,7 +46,7 @@ class ProductsTest extends TestCase
         $response->assertJsonStructure(['data' => [
             'card_properties',
             'card_release',
-            'card_print_state'
+            'card_print_state',
         ]]);
     }
 
@@ -60,7 +60,7 @@ class ProductsTest extends TestCase
         $response->assertJsonStructure(['data' => [
             'card_properties',
             'card_release',
-            'card_print_state'
+            'card_print_state',
         ]]);
     }
 
@@ -74,7 +74,7 @@ class ProductsTest extends TestCase
         $response->assertJsonStructure(['data' => [
             'card_properties',
             'card_release',
-            'card_print_state'
+            'card_print_state',
         ]]);
     }
 
@@ -88,7 +88,7 @@ class ProductsTest extends TestCase
         $response->assertJsonStructure(['data' => [
             'card_properties',
             'card_release',
-            'card_print_state'
+            'card_print_state',
         ]]);
     }
 
