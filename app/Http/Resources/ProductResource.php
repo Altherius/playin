@@ -21,13 +21,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $product_type
  * @property string $slug
  * @property string $price
- * @property ?int $card_properties_magic_id
- * @property ?int $card_properties_yugioh_id
- * @property ?int $card_properties_fab_id
- * @property ?int $card_properties_lorcana_id
- * @property ?int $boardgame_properties_id
- * @property ?int $card_print_state_id
- * @property ?int $card_release_id
+ * @property ?CardPropertiesMagic $card_properties_magic
+ * @property ?CardPropertiesYugioh $card_properties_yugioh
+ * @property ?CardPropertiesFab $card_properties_fab
+ * @property ?CardPropertiesLorcana $card_properties_lorcana
+ * @property ?BoardgameProperties $boardgame_properties
+ * @property ?CardPrintState $card_print_state
+ * @property ?CardRelease $card_release
  */
 class ProductResource extends JsonResource
 {
@@ -51,26 +51,22 @@ class ProductResource extends JsonResource
 
         if ($this->product_type === ProductType::CARD->value) {
 
-
             $properties['card_properties'] = match ($this->card_game) {
-                CardGame::MAGIC->value => new CardPropertiesMagicResource(CardPropertiesMagic::find($this->card_properties_magic_id)),
-                CardGame::YUGIOH->value => new CardPropertiesYugiohResource(CardPropertiesYugioh::find($this->card_properties_yugioh_id)),
-                CardGame::FAB->value => new CardPropertiesFabResource(CardPropertiesFab::find($this->card_properties_fab_id)),
-                CardGame::LORCANA->value => new CardPropertiesLorcanaResource(CardPropertiesLorcana::find($this->card_properties_lorcana_id)),
+                CardGame::MAGIC->value => new CardPropertiesMagicResource($this->card_properties_magic),
+                CardGame::YUGIOH->value => new CardPropertiesYugiohResource($this->card_properties_yugioh),
+                CardGame::FAB->value => new CardPropertiesFabResource($this->card_properties_fab),
+                CardGame::LORCANA->value => new CardPropertiesLorcanaResource($this->card_properties_lorcana),
                 default => null
             };
 
-            $properties['card_print_state'] = new CardPrintStateResource(CardPrintState::find($this->card_print_state_id));
-            $properties['card_release'] = new CardReleaseResource(CardRelease::find($this->card_release_id));
+            $properties['card_print_state'] = new CardPrintStateResource($this->card_print_state);
+            $properties['card_release'] = new CardReleaseResource($this->card_release);
 
-            $properties['name'] = $properties['card_properties']['name'] .
-                ' - ' . $properties['card_release']['edition'] .
-                ' ' . "({$properties['card_print_state']['language']} {$properties['card_print_state']['grading']})";
-            ;
+            $properties['name'] = $properties['card_properties']['name'].' '."({$properties['card_print_state']['language']} {$properties['card_print_state']['grading']})";
         }
 
         if ($this->product_type === ProductType::BOARDGAME->value) {
-            $properties['boardgame_properties'] = new BoardgamePropertiesResource(BoardgameProperties::find($this->boardgame_properties_id));
+            $properties['boardgame_properties'] = new BoardgamePropertiesResource($this->boardgame_properties);
         }
 
         return $properties;

@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -22,23 +22,33 @@ class Product extends Model
         return $this->hasMany(ProductLocalProperties::class);
     }
 
-    public function card_properties_magic(): HasOne
+    public function card_properties_magic(): BelongsTo
     {
-        return $this->hasOne(CardPropertiesMagic::class);
+        return $this->belongsTo(CardPropertiesMagic::class);
     }
 
-    public function card_properties_yugioh(): HasOne
+    public function card_properties_yugioh(): BelongsTo
     {
-        return $this->hasOne(CardPropertiesYugioh::class);
+        return $this->belongsTo(CardPropertiesYugioh::class);
     }
 
-    public function card_properties_fab(): HasOne
+    public function card_properties_fab(): BelongsTo
     {
-        return $this->hasOne(CardPropertiesFab::class);
+        return $this->belongsTo(CardPropertiesFab::class);
     }
 
-    public function card_properties_lorcana(): HasOne
+    public function card_properties_lorcana(): BelongsTo
     {
-        return $this->hasOne(CardPropertiesLorcana::class);
+        return $this->belongsTo(CardPropertiesLorcana::class);
+    }
+
+    public function card_release(): BelongsTo
+    {
+        return $this->belongsTo(CardRelease::class);
+    }
+
+    public function card_print_state(): BelongsTo
+    {
+        return $this->belongsTo(CardPrintState::class);
     }
 }

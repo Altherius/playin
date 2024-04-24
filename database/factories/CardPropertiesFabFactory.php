@@ -21,9 +21,7 @@ class CardPropertiesFabFactory extends Factory
             'resource_cost' => 1,
             'pitch' => 0,
             'type_line' => 'Ranger Action',
-            'rules_text' => 'Your next arrow attack this turn gains +3 Attack and
-            "When this hits a hero, create an Inertia token under their control."
-            Go again.',
+            'rules_text' => 'Your next arrow attack this turn gains +3 Attack and "When this hits a hero, create an Inertia token under their control." Go again.',
             'attack' => null,
             'defense' => 2,
         ];

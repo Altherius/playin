@@ -35,7 +35,7 @@ class ProductFactory extends Factory
             'slug' => null,
             'card_game' => null,
             'product_type' => ProductType::BOARDGAME->value,
-            'boardgame_properties_id' => 1
+            'boardgame_properties_id' => 1,
         ]);
     }
 
@@ -48,7 +48,7 @@ class ProductFactory extends Factory
             'product_type' => ProductType::CARD->value,
             'card_properties_magic_id' => 1,
             'card_release_id' => 1,
-            'card_print_state_id' => 1
+            'card_print_state_id' => 1,
         ]);
     }
 
@@ -61,7 +61,7 @@ class ProductFactory extends Factory
             'product_type' => ProductType::CARD->value,
             'card_properties_yugioh_id' => 1,
             'card_release_id' => 1,
-            'card_print_state_id' => 1
+            'card_print_state_id' => 1,
         ]);
     }
 
@@ -74,7 +74,7 @@ class ProductFactory extends Factory
             'product_type' => ProductType::CARD->value,
             'card_properties_fab_id' => 1,
             'card_release_id' => 1,
-            'card_print_state_id' => 1
+            'card_print_state_id' => 1,
         ]);
     }
 
@@ -87,7 +87,7 @@ class ProductFactory extends Factory
             'product_type' => ProductType::CARD->value,
             'card_properties_lorcana_id' => 1,
             'card_release_id' => 1,
-            'card_print_state_id' => 1
+            'card_print_state_id' => 1,
         ]);
     }
 }

@@ -17,8 +17,9 @@ class CardReleaseFactory extends Factory
     public function definition(): array
     {
         return [
-            'collection_number' => $this->faker->numberBetween(1, 300),
-            'artist' => $this->faker->name(),
+            'collection_number' => fake()->numberBetween(1, 300),
+            'artist' => fake()->name(),
+            'card_edition_id' => fake()->numberBetween(1, 10),
         ];
     }
 }

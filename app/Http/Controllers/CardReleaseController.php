@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CardReleaseResource;
 use App\Models\CardRelease;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CardReleaseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return CardReleaseResource::collection(CardRelease::paginate());
     }
 
     /**
@@ -34,17 +28,9 @@ class CardReleaseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CardRelease $cardRelease)
+    public function show(CardRelease $cardRelease): CardReleaseResource
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CardRelease $cardRelease)
-    {
-        //
+        return new CardReleaseResource($cardRelease);
     }
 
     /**

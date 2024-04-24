@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\CardEdition;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,7 +22,7 @@ class CardReleaseResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'edition' => new CardEditionResource(CardEdition::find($this->card_edition_id)),
+            'edition' => new CardEditionResource($this->card_edition),
             'collection_number' => $this->collection_number,
             'artist' => $this->artist,
         ];
