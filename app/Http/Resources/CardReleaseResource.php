@@ -2,12 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Models\CardEdition;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @property int $id
- * @property int $card_edition_id
+ * @property CardEdition $card_edition
  * @property string $collection_number
  * @property string $artist
  */
@@ -25,6 +26,7 @@ class CardReleaseResource extends JsonResource
             'edition' => new CardEditionResource($this->card_edition),
             'collection_number' => $this->collection_number,
             'artist' => $this->artist,
+            'products' => ProductResource::collection($this->whenLoaded('products')),
         ];
     }
 }

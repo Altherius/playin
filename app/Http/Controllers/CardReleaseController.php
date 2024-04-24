@@ -14,7 +14,7 @@ class CardReleaseController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return CardReleaseResource::collection(CardRelease::paginate());
+        return CardReleaseResource::collection(CardRelease::with('products')->paginate());
     }
 
     /**

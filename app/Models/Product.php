@@ -22,6 +22,11 @@ class Product extends Model
         return $this->hasMany(ProductLocalProperties::class);
     }
 
+    public function boardgame_properties(): BelongsTo
+    {
+        return $this->belongsTo(BoardgameProperties::class);
+    }
+
     public function card_properties_magic(): BelongsTo
     {
         return $this->belongsTo(CardPropertiesMagic::class);

@@ -52,21 +52,19 @@ class ProductResource extends JsonResource
         if ($this->product_type === ProductType::CARD->value) {
 
             $properties['card_properties'] = match ($this->card_game) {
-                CardGame::MAGIC->value => new CardPropertiesMagicResource($this->card_properties_magic),
-                CardGame::YUGIOH->value => new CardPropertiesYugiohResource($this->card_properties_yugioh),
-                CardGame::FAB->value => new CardPropertiesFabResource($this->card_properties_fab),
-                CardGame::LORCANA->value => new CardPropertiesLorcanaResource($this->card_properties_lorcana),
+                CardGame::MAGIC->value => new CardPropertiesMagicResource($this->whenLoaded('card_properties_magic')),
+                CardGame::YUGIOH->value => new CardPropertiesYugiohResource($this->whenLoaded('card_properties_yugioh')),
+                CardGame::FAB->value => new CardPropertiesFabResource($this->whenLoaded('card_properties_fab')),
+                CardGame::LORCANA->value => new CardPropertiesLorcanaResource($this->whenLoaded('card_properties_lorcana')),
                 default => null
             };
 
-            $properties['card_print_state'] = new CardPrintStateResource($this->card_print_state);
-            $properties['card_release'] = new CardReleaseResource($this->card_release);
-
-            $properties['name'] = $properties['card_properties']['name'].' '."({$properties['card_print_state']['language']} {$properties['card_print_state']['grading']})";
+            $properties['card_print_state'] = new CardPrintStateResource($this->whenLoaded('card_print_state'));
+            $properties['card_release'] = new CardReleaseResource($this->whenLoaded('card_release'));
         }
 
         if ($this->product_type === ProductType::BOARDGAME->value) {
-            $properties['boardgame_properties'] = new BoardgamePropertiesResource($this->boardgame_properties);
+            $properties['boardgame_properties'] = new BoardgamePropertiesResource($this->whenLoaded('boardgame_properties'));
         }
 
         return $properties;
