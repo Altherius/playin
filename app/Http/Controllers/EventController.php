@@ -48,7 +48,7 @@ class EventController extends Controller
      */
     public function show(Event $event): EventResource
     {
-        return new EventResource($event);
+        return new EventResource($event->load('registrations.user'));
     }
 
     /**

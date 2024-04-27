@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockItemController;
 use App\Http\Controllers\StoreController;
@@ -42,3 +43,4 @@ Route::apiResource('order-items', OrderItemController::class)->only('store', 'up
 Route::apiResource('card-releases', CardReleaseController::class);
 Route::apiResource('products', ProductController::class)->except('destroy');
 Route::apiResource('events', EventController::class)->except('destroy');
+Route::apiResource('registrations', RegistrationController::class);

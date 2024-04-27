@@ -33,6 +33,7 @@ class EventResource extends JsonResource
             'end_time' => $this->end_time,
             'max_capacity' => $this->max_capacity,
             'price' => (float) $this->price,
+            'registrations' => RegistrationResource::collection($this->whenLoaded('registrations'))
         ];
     }
 }
