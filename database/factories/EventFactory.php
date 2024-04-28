@@ -27,4 +27,11 @@ class EventFactory extends Factory
             'store_id' => fake()->numberBetween(1, 3),
         ];
     }
+
+    public function full(): Factory
+    {
+        return $this->state(fn (array $attributes) => [
+            'max_capacity' => 0,
+        ]);
+    }
 }

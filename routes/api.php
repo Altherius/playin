@@ -43,4 +43,5 @@ Route::apiResource('order-items', OrderItemController::class)->only('store', 'up
 Route::apiResource('card-releases', CardReleaseController::class);
 Route::apiResource('products', ProductController::class)->except('destroy');
 Route::apiResource('events', EventController::class)->except('destroy');
+Route::get('stores/{store}/upcoming-events', [EventController::class, 'upcoming_events']);
 Route::apiResource('registrations', RegistrationController::class);

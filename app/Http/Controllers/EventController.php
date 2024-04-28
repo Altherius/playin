@@ -14,7 +14,16 @@ class EventController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return EventResource::collection(Event::paginate());
+        return EventResource::collection(Event::withCount('registrations')->paginate());
+    }
+
+    public function upcoming_events(int $store_id): AnonymousResourceCollection
+    {
+        return EventResource::collection(Event::where('start_time', '>', 'now()')
+            ->where('store_id', '=', $store_id)
+            ->withCount('registrations')
+            ->paginate()
+        );
     }
 
     /**
@@ -48,7 +57,7 @@ class EventController extends Controller
      */
     public function show(Event $event): EventResource
     {
-        return new EventResource($event->load('registrations.user'));
+        return new EventResource($event->load('registrations.user')->loadCount('registrations'));
     }
 
     /**

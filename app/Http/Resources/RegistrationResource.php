@@ -18,7 +18,7 @@ class RegistrationResource extends JsonResource
             'id' => $this->id,
             'user' => new UserResource($this->whenLoaded('user')),
             'event' => new EventResource($this->whenLoaded('event')),
-            'paid' => $this->paid
+            'paid' => $this->paid,
         ];
     }
 }

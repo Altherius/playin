@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RegistrationResource;
+use App\Models\Event;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class RegistrationController extends Controller
 {
@@ -27,6 +29,11 @@ class RegistrationController extends Controller
             'event_id' => 'required|exists:events,id',
             'user_id' => 'required|exists:users,id',
         ]);
+
+        $event = Event::withCount('registrations')->find($request->event_id);
+        if ($event->registrations_count >= $event->max_capacity) {
+            throw new UnprocessableEntityHttpException('This event is already full');
+        }
 
         $registration = new Registration();
         $registration->user_id = $request->user_id;
@@ -53,7 +60,7 @@ class RegistrationController extends Controller
         $request->validate([
             'event_id' => 'required|exists:events,id',
             'user_id' => 'required|exists:users,id',
-            'paid' => 'boolean'
+            'paid' => 'boolean',
         ]);
 
         $registration->user_id = $request->user_id;
