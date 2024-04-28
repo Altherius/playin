@@ -20,6 +20,11 @@ class User extends Authenticatable
         return $this->hasMany(Address::class);
     }
 
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(Registration::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

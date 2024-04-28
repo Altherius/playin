@@ -30,5 +30,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\CardPrintState::factory(1)->create();
         \App\Models\CardEdition::factory(10)->create();
         \App\Models\CardRelease::factory(1)->create();
+        \App\Models\Event::factory(10)->create();
     }
 }
