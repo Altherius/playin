@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Order\OrderCreateRequest;
+use App\Http\Requests\Order\OrderUpdateRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\Endpoint;
@@ -24,13 +25,8 @@ class OrderController extends Controller
     #[Endpoint('Create an order')]
     #[BodyParam('customer_id', 'int', 'The id of the user who is the customer of the order.', example: 1)]
     #[BodyParam('store_id', 'int', 'The id of the store related to the order.', example: 1)]
-    public function store(Request $request): OrderResource
+    public function store(OrderCreateRequest $request): OrderResource
     {
-        $request->validate([
-            'customer_id' => 'required|exists:users,id',
-            'store_id' => 'required|exists:stores,id',
-        ]);
-
         $order = new Order();
         $order->customer_id = $request->customer_id;
         $order->store_id = $request->store_id;
@@ -49,14 +45,8 @@ class OrderController extends Controller
     #[BodyParam('validated', 'bool', 'true if the stock is validated and the products must be deduced from local stock, false otherwise.')]
     #[BodyParam('sent', 'bool', 'true if the stock is sent, false otherwise.')]
     #[BodyParam('sent', 'bool', 'true if the stock is received, false otherwise.')]
-    public function update(Request $request, Order $order): OrderResource
+    public function update(OrderUpdateRequest $request, Order $order): OrderResource
     {
-        $request->validate([
-            'validated' => 'required|boolean|accepted_if:sent,true',
-            'sent' => 'required|boolean|accepted_if:received,true',
-            'received' => 'required|boolean',
-        ]);
-
         $order->validated = $request->validated;
         $order->sent = $request->sent;
         $order->received = $request->received;

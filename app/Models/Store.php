@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int $id An ID identifying the store
+ * @property int $id
+ * @property string $name
  */
 class Store extends Model
 {

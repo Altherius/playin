@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Product\ProductCreateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
 use Knuckles\Scribe\Attributes\BodyParam;
@@ -33,13 +33,8 @@ class ProductController extends Controller
     #[Endpoint('Create a product')]
     #[BodyParam('name', 'string', 'The name of the product.', example: 'Wingspan')]
     #[BodyParam('price', 'number', 'The default price of the product.', example: 19.9)]
-    public function store(Request $request): ProductResource
+    public function store(ProductCreateRequest $request): ProductResource
     {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|gte:0',
-        ]);
-
         $product = new Product();
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
@@ -66,13 +61,8 @@ class ProductController extends Controller
     #[Endpoint('Edit a product')]
     #[BodyParam('name', 'string', 'The name of the product.', example: 'Wingspan')]
     #[BodyParam('price', 'number', 'The default price of the product.', example: 19.9)]
-    public function update(Request $request, Product $product): ProductResource
+    public function update(ProductCreateRequest $request, Product $product): ProductResource
     {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|gte:0',
-        ]);
-
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->price = $request->price;

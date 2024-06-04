@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property int $id
  * @property bool $validated
+ * @property bool $sent
+ * @property bool $received
  * @property int $store_id
  * @property int $retailer_id
  */

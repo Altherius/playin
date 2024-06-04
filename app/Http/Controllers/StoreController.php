@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Store\StoreCreateRequest;
 use App\Http\Resources\StoreResource;
 use App\Models\Store;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\Endpoint;
@@ -24,12 +24,8 @@ class StoreController extends Controller
 
     #[Endpoint('Create a store')]
     #[BodyParam('name', 'string', 'The name of the store.', example: 'Playin Paris BNF')]
-    public function store(Request $request): StoreResource
+    public function store(StoreCreateRequest $request): StoreResource
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
-
         $store = new Store();
         $store->name = $request->name;
         $store->save();
@@ -45,12 +41,8 @@ class StoreController extends Controller
 
     #[Endpoint('Edit a store')]
     #[BodyParam('name', 'string', 'The name of the edited store.', example: 'Playin Paris BNF')]
-    public function update(Request $request, Store $store): StoreResource
+    public function update(StoreCreateRequest $request, Store $store): StoreResource
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
-
         $store->name = $request->name;
         $store->save();
 

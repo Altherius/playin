@@ -16,6 +16,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $store_id
  * @property User $customer
  * @property int $customer_id
+ * @property bool $validated
+ * @property bool $sent
+ * @property bool $received
  */
 class Order extends Model
 {

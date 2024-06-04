@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Registration\RegistrationCreateRequest;
+use App\Http\Requests\Registration\RegistrationUpdateRequest;
 use App\Http\Resources\RegistrationResource;
 use App\Models\Event;
 use App\Models\Registration;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
@@ -23,13 +24,8 @@ class RegistrationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RegistrationResource
+    public function store(RegistrationCreateRequest $request): RegistrationResource
     {
-        $request->validate([
-            'event_id' => 'required|exists:events,id',
-            'user_id' => 'required|exists:users,id',
-        ]);
-
         $event = Event::withCount('registrations')->find($request->event_id);
         if ($event->registrations_count >= $event->max_capacity) {
             throw new UnprocessableEntityHttpException('This event is already full');
@@ -55,7 +51,7 @@ class RegistrationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Registration $registration): RegistrationResource
+    public function update(RegistrationUpdateRequest $request, Registration $registration): RegistrationResource
     {
         $request->validate([
             'event_id' => 'required|exists:events,id',
