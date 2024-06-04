@@ -53,12 +53,6 @@ class RegistrationController extends Controller
      */
     public function update(RegistrationUpdateRequest $request, Registration $registration): RegistrationResource
     {
-        $request->validate([
-            'event_id' => 'required|exists:events,id',
-            'user_id' => 'required|exists:users,id',
-            'paid' => 'boolean',
-        ]);
-
         $registration->user_id = $request->user_id;
         $registration->event_id = $request->event_id;
         $registration->paid = $request->paid;
