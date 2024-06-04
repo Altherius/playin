@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\CardGame;
+use App\Enums\ProductType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -55,5 +57,13 @@ class Product extends Model
     public function card_print_state(): BelongsTo
     {
         return $this->belongsTo(CardPrintState::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'product_type' => ProductType::class,
+            'card_game' => CardGame::class
+        ];
     }
 }
