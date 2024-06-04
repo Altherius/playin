@@ -63,7 +63,7 @@ class Product extends Model
     {
         return [
             'product_type' => ProductType::class,
-            'card_game' => CardGame::class
+            'card_game' => CardGame::class,
         ];
     }
 }

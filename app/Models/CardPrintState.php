@@ -21,7 +21,7 @@ class CardPrintState extends Model
     {
         return [
             'grading' => CardGrading::class,
-            'language' => CardLanguage::class
+            'language' => CardLanguage::class,
         ];
     }
 }
