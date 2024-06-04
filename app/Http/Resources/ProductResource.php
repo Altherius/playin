@@ -17,8 +17,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @property string $id
  * @property string $name
- * @property string $card_game
- * @property string $product_type
+ * @property CardGame $card_game
+ * @property ProductType $product_type
  * @property string $slug
  * @property string $price
  * @property ?CardPropertiesMagic $card_properties_magic
@@ -41,7 +41,7 @@ class ProductResource extends JsonResource
         $properties = [
             'id' => $this->id,
             'name' => $this->name,
-            'card_game' => $this->card_game !== null ? CardGame::from($this->card_game)->name() : null,
+            'card_game' => $this->card_game,
             'slug' => $this->slug,
             'price' => (float) $this->price,
             'links' => [
@@ -49,21 +49,20 @@ class ProductResource extends JsonResource
             ],
         ];
 
-        if ($this->product_type === ProductType::CARD->value) {
+        if ($this->product_type === ProductType::CARD) {
 
             $properties['card_properties'] = match ($this->card_game) {
-                CardGame::MAGIC->value => new CardPropertiesMagicResource($this->whenLoaded('card_properties_magic')),
-                CardGame::YUGIOH->value => new CardPropertiesYugiohResource($this->whenLoaded('card_properties_yugioh')),
-                CardGame::FAB->value => new CardPropertiesFabResource($this->whenLoaded('card_properties_fab')),
-                CardGame::LORCANA->value => new CardPropertiesLorcanaResource($this->whenLoaded('card_properties_lorcana')),
-                default => null
+                CardGame::MAGIC => new CardPropertiesMagicResource($this->whenLoaded('card_properties_magic')),
+                CardGame::YUGIOH => new CardPropertiesYugiohResource($this->whenLoaded('card_properties_yugioh')),
+                CardGame::FAB => new CardPropertiesFabResource($this->whenLoaded('card_properties_fab')),
+                CardGame::LORCANA => new CardPropertiesLorcanaResource($this->whenLoaded('card_properties_lorcana')),
             };
 
             $properties['card_print_state'] = new CardPrintStateResource($this->whenLoaded('card_print_state'));
             $properties['card_release'] = new CardReleaseResource($this->whenLoaded('card_release'));
         }
 
-        if ($this->product_type === ProductType::BOARDGAME->value) {
+        if ($this->product_type === ProductType::BOARDGAME) {
             $properties['boardgame_properties'] = new BoardgamePropertiesResource($this->whenLoaded('boardgame_properties'));
         }
 

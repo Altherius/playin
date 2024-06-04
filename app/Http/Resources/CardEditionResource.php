@@ -2,9 +2,15 @@
 
 namespace App\Http\Resources;
 
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property DateTime $released_at
+ */
 class CardEditionResource extends JsonResource
 {
     /**
