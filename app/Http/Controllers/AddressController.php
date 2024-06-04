@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Address\AddressCreateRequest;
 use App\Http\Resources\AddressResource;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Stock;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Knuckles\Scribe\Attributes\Endpoint;
 use Knuckles\Scribe\Attributes\Group;
@@ -22,17 +22,8 @@ class AddressController extends Controller
     }
 
     #[Endpoint('Create an address and binds it to given user')]
-    public function addCustomerAddress(Request $request, User $user): AddressResource
+    public function addCustomerAddress(AddressCreateRequest $request, User $user): AddressResource
     {
-        $request->validate([
-            'address_name' => 'required',
-            'recipient_name' => 'required',
-            'street' => 'required',
-            'postal_code' => 'required',
-            'locality' => 'required',
-            'country' => 'required',
-        ]);
-
         $address = new Address();
         $address = $this->hydrateAddress($address, $request);
         $address->user_id = $user->id;
@@ -42,17 +33,8 @@ class AddressController extends Controller
     }
 
     #[Endpoint('Create an address and binds it to given order')]
-    public function addOrderAddress(Request $request, Order $order): AddressResource
+    public function addOrderAddress(AddressCreateRequest $request, Order $order): AddressResource
     {
-        $request->validate([
-            'address_name' => 'required',
-            'recipient_name' => 'required',
-            'street' => 'required',
-            'postal_code' => 'required',
-            'locality' => 'required',
-            'country' => 'required',
-        ]);
-
         $address = new Address();
         $address = $this->hydrateAddress($address, $request);
         $address->order_id = $order->id;
@@ -62,17 +44,8 @@ class AddressController extends Controller
     }
 
     #[Endpoint('Create an address and binds it to given stock')]
-    public function addStockAddress(Request $request, Stock $stock): AddressResource
+    public function addStockAddress(AddressCreateRequest $request, Stock $stock): AddressResource
     {
-        $request->validate([
-            'address_name' => 'required',
-            'recipient_name' => 'required',
-            'street' => 'required',
-            'postal_code' => 'required',
-            'locality' => 'required',
-            'country' => 'required',
-        ]);
-
         $address = new Address();
         $address = $this->hydrateAddress($address, $request);
         $address->stock_id = $stock->id;
@@ -82,17 +55,8 @@ class AddressController extends Controller
     }
 
     #[Endpoint('Update an address')]
-    public function update(Request $request, Address $address): AddressResource
+    public function update(AddressCreateRequest $request, Address $address): AddressResource
     {
-        $request->validate([
-            'address_name' => 'required',
-            'recipient_name' => 'required',
-            'street' => 'required',
-            'postal_code' => 'required',
-            'locality' => 'required',
-            'country' => 'required',
-        ]);
-
         $address = $this->hydrateAddress($address, $request);
         $address->save();
 
@@ -107,7 +71,7 @@ class AddressController extends Controller
         return response()->noContent();
     }
 
-    private function hydrateAddress(Address $address, Request $request): Address
+    private function hydrateAddress(Address $address, AddressCreateRequest $request): Address
     {
         $address->address_name = $request->address_name;
         $address->recipient_name = $request->recipient_name;

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StockItem\StockItemCreateRequest;
 use App\Http\Resources\StockResource;
 use App\Models\StockItem;
-use Illuminate\Http\Request;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\Endpoint;
 use Knuckles\Scribe\Attributes\Group;
@@ -18,15 +18,8 @@ class StockItemController extends Controller
     #[BodyParam('product_id', 'int', 'The id of the related product.', example: 1)]
     #[BodyParam('quantity', 'int', 'The quantity of the product ordered.', example: 4)]
     #[BodyParam('unit_price', 'number', 'The unit price of the product in the order.', example: 19.9)]
-    public function store(Request $request): StockResource
+    public function store(StockItemCreateRequest $request): StockResource
     {
-        $request->validate([
-            'stock_id' => 'required|exists:stocks,id',
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'gte:1',
-            'unit_price' => 'required|min:0',
-        ]);
-
         $item = new StockItem();
 
         $item->stock_id = $request->stock_id;
@@ -44,15 +37,8 @@ class StockItemController extends Controller
     #[BodyParam('product_id', 'int', 'The id of the related product.', example: 1)]
     #[BodyParam('quantity', 'int', 'The quantity of the product ordered.', example: 4)]
     #[BodyParam('unit_price', 'number', 'The unit price of the product in the order.', example: 19.9)]
-    public function update(Request $request, StockItem $item): StockResource
+    public function update(StockItemCreateRequest $request, StockItem $item): StockResource
     {
-        $request->validate([
-            'stock_id' => 'required|exists:stocks,id',
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'gte:1',
-            'unit_price' => 'required|min:0',
-        ]);
-
         $item->stock_id = $request->stock_id;
         $item->product_id = $request->product_id;
         $item->quantity = $request->quantity;

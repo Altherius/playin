@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Event\EventCreateRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class EventController extends Controller
@@ -29,24 +29,10 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): EventResource
+    public function store(EventCreateRequest $request): EventResource
     {
-        $request->validate([
-            'name' => 'required',
-            'store_id' => 'required|exists:stores,id',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after:start_time',
-            'max_capacity' => 'gt:0',
-            'price' => 'required|gte:0',
-        ]);
-
         $event = new Event();
-        $event->name = $request->name;
-        $event->store_id = $request->store_id;
-        $event->start_time = $request->start_time;
-        $event->end_time = $request->end_time;
-        $event->max_capacity = $request->max_capacity;
-        $event->price = $request->price;
+        $event = $this->hydrateEvent($request, $event);
         $event->save();
 
         return new EventResource($event);
@@ -63,25 +49,23 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event): EventResource
+    public function update(EventCreateRequest $request, Event $event): EventResource
     {
-        $request->validate([
-            'name' => 'required',
-            'store_id' => 'required|exists:stores,id',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after:start_time',
-            'max_capacity' => 'gt:0',
-            'price' => 'required|gte:0',
-        ]);
+        $event = $this->hydrateEvent($request, $event);
+        $event->save();
 
+        return new EventResource($event);
+    }
+
+    private function hydrateEvent(EventCreateRequest $request, Event $event): Event
+    {
         $event->name = $request->name;
         $event->store_id = $request->store_id;
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
         $event->max_capacity = $request->max_capacity;
         $event->price = $request->price;
-        $event->save();
 
-        return new EventResource($event);
+        return $event;
     }
 }

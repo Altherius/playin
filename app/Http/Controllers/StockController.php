@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Stock\StockCreateRequest;
+use App\Http\Requests\Stock\StockUpdateRequest;
 use App\Http\Resources\StockResource;
 use App\Models\Stock;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\Endpoint;
@@ -31,13 +32,8 @@ class StockController extends Controller
     #[Endpoint('Create a stock')]
     #[BodyParam('retailer_id', 'int', 'The id of the user who is the retailer of the stock.', example: 1)]
     #[BodyParam('store_id', 'int', 'The id of the store related to the stock.', example: 1)]
-    public function store(Request $request): StockResource
+    public function store(StockCreateRequest $request): StockResource
     {
-        $request->validate([
-            'retailer_id' => 'required|exists:users,id',
-            'store_id' => 'required|exists:stores,id',
-        ]);
-
         $stock = new Stock();
         $stock->retailer_id = $request->retailer_id;
         $stock->store_id = $request->store_id;
@@ -50,14 +46,8 @@ class StockController extends Controller
     #[BodyParam('validated', 'bool', 'true if the stock is validated and the products must be added to local stock, false otherwise.')]
     #[BodyParam('sent', 'bool', 'true if the stock is sent, false otherwise.')]
     #[BodyParam('sent', 'bool', 'true if the stock is received, false otherwise.')]
-    public function update(Request $request, Stock $stock): StockResource
+    public function update(StockUpdateRequest $request, Stock $stock): StockResource
     {
-        $request->validate([
-            'validated' => 'required|boolean|accepted_if:sent,true',
-            'sent' => 'required|boolean|accepted_if:received,true',
-            'received' => 'required|boolean',
-        ]);
-
         $stock->validated = $request->validated;
         $stock->sent = $request->sent;
         $stock->received = $request->received;
