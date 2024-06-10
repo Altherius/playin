@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,6 +14,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @mixin Builder
  *
  * @property string $id An ID identifying the user.
+ * @property Collection<StoreCreditHistory> $store_credit_history
+ * @property float $store_credit
  */
 class User extends Authenticatable
 {
@@ -26,6 +29,11 @@ class User extends Authenticatable
     public function registrations(): HasMany
     {
         return $this->hasMany(Registration::class);
+    }
+
+    public function store_credit_history(): HasMany
+    {
+        return $this->hasMany(StoreCreditHistory::class, 'customer_id');
     }
 
     /**
