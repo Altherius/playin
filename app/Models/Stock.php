@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentMode;
+use App\Enums\PaymentStatus;
 use App\Events\StockValidated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,5 +45,10 @@ class Stock extends Model
 
     protected $dispatchesEvents = [
         'updating' => StockValidated::class,
+    ];
+
+    protected $casts = [
+        'payment_status' => PaymentStatus::class,
+        'payment_mode' => PaymentMode::class
     ];
 }

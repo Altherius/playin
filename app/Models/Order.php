@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentMode;
+use App\Enums\PaymentStatus;
 use App\Events\OrderValidated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -46,5 +48,10 @@ class Order extends Model
 
     protected $dispatchesEvents = [
         'updating' => OrderValidated::class,
+    ];
+
+    protected $casts = [
+        'payment_status' => PaymentStatus::class,
+        'payment_mode' => PaymentMode::class
     ];
 }
