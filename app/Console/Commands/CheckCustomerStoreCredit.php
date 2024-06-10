@@ -31,7 +31,7 @@ class CheckCustomerStoreCredit extends Command
     {
         $user = $this->argument('user');
 
-        if (!$user) {
+        if (! $user) {
             $this->confirm('Are you sure you want to check all users? This may take some time.');
         }
 

@@ -27,7 +27,7 @@ class StoreCreditHistory extends Model
     protected function casts(): array
     {
         return [
-            'credit' => 'float'
+            'credit' => 'float',
         ];
     }
 }

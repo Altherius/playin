@@ -29,7 +29,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/token', [ApiTokenController::class, 'token']);
 Route::get('/me', [UserController::class, 'me'])->middleware('auth:sanctum');
 
-
 Route::apiResource('addresses', AddressController::class)->only('show', 'update', 'destroy');
 Route::apiResource('card-releases', CardReleaseController::class);
 Route::apiResource('events', EventController::class)->except('destroy');
