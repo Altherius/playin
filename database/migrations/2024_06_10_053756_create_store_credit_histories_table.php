@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('comment');
             $table->float('credit');
             $table->foreignIdFor(User::class, 'customer_id');
-            $table->foreignIdFor(User::class, 'collaborator_id');
+            $table->foreignIdFor(User::class, 'collaborator_id')->nullable();
             $table->timestamps();
         });
 

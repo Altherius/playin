@@ -2,22 +2,21 @@
 
 namespace App\Events;
 
-use App\Models\Stock;
+use App\Models\StoreCreditHistory;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StockValidated
+class StoreCreditHistoryCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(public Stock $stock)
+    public function __construct(public StoreCreditHistory $storeCreditHistory)
     {
-
     }
 
     /**

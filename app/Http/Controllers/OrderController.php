@@ -35,6 +35,8 @@ class OrderController extends Controller
         $order->validated = $request->validated;
         $order->sent = $request->sent;
         $order->received = $request->received;
+        $order->payment_status = $request->payment_status;
+        $order->payment_mode = $request->payment_mode;
         $order->save();
 
         return new OrderResource($order);

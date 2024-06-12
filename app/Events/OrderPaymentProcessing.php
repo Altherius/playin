@@ -2,22 +2,22 @@
 
 namespace App\Events;
 
-use App\Models\Stock;
+use App\Models\Order;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StockValidated
+class OrderPaymentProcessing
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(public Stock $stock)
+    public function __construct(public Order $order)
     {
-
+        //
     }
 
     /**

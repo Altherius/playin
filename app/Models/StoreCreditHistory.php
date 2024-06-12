@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\StoreCreditHistoryCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property string $comment
  * @property float $credit
+ * @property int $customer_id
  */
 class StoreCreditHistory extends Model
 {
@@ -30,4 +32,8 @@ class StoreCreditHistory extends Model
             'credit' => 'float',
         ];
     }
+
+    protected $dispatchesEvents = [
+        'created' => StoreCreditHistoryCreated::class,
+    ];
 }
