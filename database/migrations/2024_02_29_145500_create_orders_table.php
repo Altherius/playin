@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PaymentStatus;
 use App\Models\Store;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -23,6 +24,8 @@ return new class extends Migration
             $table->boolean('validated')->default(false);
             $table->boolean('sent')->default(false);
             $table->boolean('received')->default(false);
+            $table->string('payment_status')->default(PaymentStatus::AWAITING_PAYMENT);
+            $table->string('payment_mode')->nullable();
             $table->timestamps();
         });
     }

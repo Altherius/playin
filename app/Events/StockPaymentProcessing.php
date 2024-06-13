@@ -8,7 +8,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StockValidated
+class StockPaymentProcessing
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -17,7 +17,7 @@ class StockValidated
      */
     public function __construct(public Stock $stock)
     {
-
+        //
     }
 
     /**

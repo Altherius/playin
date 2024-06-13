@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\PaymentMode;
+use App\Enums\PaymentStatus;
 use App\Models\Address;
 use App\Models\OrderItem;
 use App\Models\User;
@@ -17,6 +19,8 @@ use Illuminate\Support\Collection;
  * @property User $customer
  * @property Collection<OrderItem> $items
  * @property Address $address
+ * @property PaymentStatus $payment_status
+ * @property PaymentMode $payment_mode
  */
 class OrderResource extends JsonResource
 {
@@ -33,6 +37,8 @@ class OrderResource extends JsonResource
             'validated' => $this->validated,
             'sent' => $this->sent,
             'received' => $this->received,
+            'payment_status' => $this->payment_status,
+            'payment_mode' => $this->payment_mode,
             'total_price' => round($this->items->reduce(fn ($carry, $item) => $carry + ($item->quantity * $item->unit_price), 0), 2),
             'items' => OrderItemResource::collection($this->items),
             'address' => new AddressResource($this->address),

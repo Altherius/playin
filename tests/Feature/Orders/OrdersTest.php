@@ -2,6 +2,7 @@
 
 namespace Orders;
 
+use App\Enums\PaymentStatus;
 use App\Models\Order;
 use App\Models\Store;
 use App\Models\User;
@@ -47,6 +48,8 @@ class OrdersTest extends TestCase
             'validated' => false,
             'sent' => false,
             'received' => false,
+            'payment_mode' => null,
+            'payment_status' => PaymentStatus::AWAITING_PAYMENT->value,
         ],
             ['Accept' => 'application/json']
         );
