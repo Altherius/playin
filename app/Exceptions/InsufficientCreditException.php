@@ -2,6 +2,4 @@
 
 namespace App\Exceptions;
 
-class InsufficientCreditException extends \Exception
-{
-}
+class InsufficientCreditException extends \Exception {}
