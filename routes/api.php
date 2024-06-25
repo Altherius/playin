@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\CardReleaseController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GiftCardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProductController;
@@ -32,6 +33,10 @@ Route::get('/me', [UserController::class, 'me'])->middleware('auth:sanctum');
 Route::apiResource('addresses', AddressController::class)->only('show', 'update', 'destroy');
 Route::apiResource('card-releases', CardReleaseController::class);
 Route::apiResource('events', EventController::class)->except('destroy');
+Route::apiResource('gift-cards', GiftCardController::class)->except('destroy');
+Route::post('/gift-cards/{giftCard}/activate', [GiftCardController::class, 'activate']);
+Route::post('/gift-cards/{giftCard}/consume', [GiftCardController::class, 'consume'])->middleware('auth:sanctum');
+
 Route::apiResource('orders', OrderController::class)->except('destroy');
 Route::apiResource('products', ProductController::class)->except('destroy');
 Route::apiResource('registrations', RegistrationController::class);

@@ -15,10 +15,7 @@ class StockValidated
     /**
      * Create a new event instance.
      */
-    public function __construct(public Stock $stock)
-    {
-
-    }
+    public function __construct(public Stock $stock) {}
 
     /**
      * Get the channels the event should broadcast on.

@@ -15,9 +15,7 @@ class StoreCreditHistoryCreated
     /**
      * Create a new event instance.
      */
-    public function __construct(public StoreCreditHistory $storeCreditHistory)
-    {
-    }
+    public function __construct(public StoreCreditHistory $storeCreditHistory) {}
 
     /**
      * Get the channels the event should broadcast on.

@@ -31,5 +31,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\CardEdition::factory(10)->create();
         \App\Models\CardRelease::factory(1)->create();
         \App\Models\Event::factory(10)->recycle($stores)->create();
+        \App\Models\GiftCard::factory(30)->create();
     }
 }
