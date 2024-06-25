@@ -29,16 +29,15 @@ class GiftCardsTest extends TestCase
 
     public function test_gift_cards_can_be_created(): void
     {
-        $response = $this->post("/api/gift-cards", [
+        $response = $this->post('/api/gift-cards', [
             'barcode' => '0000000000000',
             'value' => 50,
         ]);
 
         $response->assertCreated();
 
-        $response->assertJson(fn (AssertableJson $json) =>
-            $json->where('data.barcode', '0000000000000')
-                 ->where('data.value', 50)
+        $response->assertJson(fn (AssertableJson $json) => $json->where('data.barcode', '0000000000000')
+            ->where('data.value', 50)
         );
     }
 
@@ -53,8 +52,7 @@ class GiftCardsTest extends TestCase
 
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) =>
-        $json->where('data.barcode', '0000000000000')
+        $response->assertJson(fn (AssertableJson $json) => $json->where('data.barcode', '0000000000000')
             ->where('data.value', 50)
         );
     }
@@ -67,8 +65,7 @@ class GiftCardsTest extends TestCase
 
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) =>
-            $json->where('data.status', GiftCardStatus::ACTIVE->value)
+        $response->assertJson(fn (AssertableJson $json) => $json->where('data.status', GiftCardStatus::ACTIVE->value)
         );
     }
 
@@ -81,8 +78,7 @@ class GiftCardsTest extends TestCase
 
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) =>
-        $json->where('data.status', GiftCardStatus::USED->value)
+        $response->assertJson(fn (AssertableJson $json) => $json->where('data.status', GiftCardStatus::USED->value)
         );
 
         $user = $user->refresh();

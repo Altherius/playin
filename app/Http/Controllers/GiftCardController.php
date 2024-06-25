@@ -36,8 +36,6 @@ class GiftCardController extends Controller
         $giftCard->value = $request->value;
         $giftCard->status = GiftCardStatus::INACTIVE;
 
-
-
         return (new GiftCardResource($giftCard))->response()->setStatusCode(201);
     }
 

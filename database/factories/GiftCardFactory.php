@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\GiftCardStatus;
-use App\Enums\ProductType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
