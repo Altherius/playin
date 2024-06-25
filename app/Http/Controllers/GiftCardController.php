@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Enums\GiftCardStatus;
+use App\Http\Requests\GiftCard\GiftCardCreateRequest;
+use App\Http\Requests\GiftCard\GiftCardUpdateRequest;
 use App\Http\Resources\GiftCardResource;
 use App\Models\GiftCard;
 use App\Models\StoreCreditHistory;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -26,16 +28,24 @@ class GiftCardController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GiftCardCreateRequest $request): JsonResponse
     {
-        //
+        $giftCard = new GiftCard();
+
+        $giftCard->barcode = $request->barcode;
+        $giftCard->value = $request->value;
+        $giftCard->status = GiftCardStatus::INACTIVE;
+
+
+
+        return (new GiftCardResource($giftCard))->response()->setStatusCode(201);
     }
 
     public function activate(GiftCard $giftCard): GiftCardResource
     {
 
         if ($giftCard->status !== GiftCardStatus::INACTIVE) {
-            throw new UnprocessableEntityHttpException("This gift card is already activated");
+            throw new UnprocessableEntityHttpException('This gift card is already activated');
         }
 
         $giftCard->status = GiftCardStatus::ACTIVE;
@@ -49,12 +59,12 @@ class GiftCardController extends Controller
         /** @var ?User $user */
         $user = Auth::user();
 
-        if (!$user instanceof User) {
-            throw new UnauthorizedHttpException("", "You must be logged in to use a gift card");
+        if (! $user instanceof User) {
+            throw new UnauthorizedHttpException('', 'You must be logged in to use a gift card');
         }
 
         if ($giftCard->status !== GiftCardStatus::ACTIVE) {
-            throw new UnprocessableEntityHttpException("This gift card is not active");
+            throw new UnprocessableEntityHttpException('This gift card is not active');
         }
 
         $giftCard->status = GiftCardStatus::USED;
@@ -80,8 +90,11 @@ class GiftCardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, GiftCard $giftCard)
+    public function update(GiftCardUpdateRequest $request, GiftCard $giftCard): GiftCardResource
     {
-        //
+        $giftCard->barcode = $request->barcode;
+        $giftCard->value = $request->value;
+
+        return new GiftCardResource($giftCard);
     }
 }

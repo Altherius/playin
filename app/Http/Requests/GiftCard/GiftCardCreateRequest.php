@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Requests\Order;
+namespace App\Http\Requests\GiftCard;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * @property int $customer_id
- * @property int $store_id
+ * @property string $barcode
+ * @property float $value
  */
-class OrderCreateRequest extends FormRequest
+class GiftCardCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,8 @@ class OrderCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_id' => 'required|exists:users,id',
-            'store_id' => 'required|exists:stores,id',
+            'barcode' => 'required|string|size:13',
+            'value' => 'required|numeric|gte:0',
         ];
     }
 }

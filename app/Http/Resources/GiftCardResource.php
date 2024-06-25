@@ -18,7 +18,7 @@ class GiftCardResource extends JsonResource
             'id' => $this->id,
             'barcode' => $this->barcode,
             'value' => (float) $this->value,
-            'status' => $this->status
+            'status' => $this->status,
         ];
     }
 }
