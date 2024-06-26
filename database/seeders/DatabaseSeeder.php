@@ -14,12 +14,13 @@ class DatabaseSeeder extends Seeder
     {
         $users = \App\Models\User::factory(10)->has(Address::factory()->count(2))->create();
         $stores = \App\Models\Store::factory(3)->create();
-        \App\Models\Product::factory(10)->create();
-        \App\Models\Product::factory(10)->boardgame()->create();
-        \App\Models\Product::factory(10)->magic()->create();
-        \App\Models\Product::factory(10)->yugioh()->create();
-        \App\Models\Product::factory(10)->fab()->create();
-        \App\Models\Product::factory(10)->lorcana()->create();
+        $categories = \App\Models\Category::factory(5)->withParent()->create();
+        \App\Models\Product::factory(10)->recycle($categories)->create();
+        \App\Models\Product::factory(10)->boardgame()->recycle($categories)->create();
+        \App\Models\Product::factory(10)->magic()->recycle($categories)->create();
+        \App\Models\Product::factory(10)->yugioh()->recycle($categories)->create();
+        \App\Models\Product::factory(10)->fab()->recycle($categories)->create();
+        \App\Models\Product::factory(10)->lorcana()->recycle($categories)->create();
         \App\Models\Order::factory(5)->has(Address::factory())->recycle($users)->recycle($stores)->create();
         \App\Models\Stock::factory(5)->has(Address::factory())->recycle($users)->recycle($stores)->create();
         \App\Models\BoardgameProperties::factory(5)->create();

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,7 +25,7 @@ class EventFactory extends Factory
             'end_time' => $start_date->add(new \DateInterval('PT1H')),
             'max_capacity' => fake()->numberBetween(8, 64),
             'price' => fake()->numberBetween(0, 20),
-            'store_id' => fake()->numberBetween(1, 3),
+            'store_id' => Store::factory(),
         ];
     }
 

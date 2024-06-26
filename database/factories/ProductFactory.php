@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\CardGame;
 use App\Enums\ProductType;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -25,6 +26,7 @@ class ProductFactory extends Factory
             'price' => round(10 * fake()->randomFloat(2, 10, 100)) / 10,
             'card_game' => fake()->randomElement(CardGame::cases())->value,
             'product_type' => ProductType::OTHER,
+            'category_id' => Category::factory(),
         ];
     }
 

@@ -59,6 +59,11 @@ class Product extends Model
         return $this->belongsTo(CardPrintState::class);
     }
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     protected function casts(): array
     {
         return [
