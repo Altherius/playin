@@ -37,7 +37,6 @@ Route::apiResource('card-releases', CardReleaseController::class);
 Route::apiResource('categories', CategoryController::class);
 Route::get('/categories/{category}/products', [CategoryController::class, 'products']);
 
-
 Route::apiResource('events', EventController::class)->except('destroy');
 Route::apiResource('gift-cards', GiftCardController::class)->except('destroy');
 Route::post('/gift-cards/{giftCard}/activate', [GiftCardController::class, 'activate']);

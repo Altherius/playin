@@ -23,7 +23,7 @@ class CategoryWithHierarchyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'parent' => new CategoryWithHierarchyResource($this->parent)
+            'parent' => new CategoryWithHierarchyResource($this->parent),
         ];
     }
 }

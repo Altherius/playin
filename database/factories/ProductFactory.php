@@ -26,7 +26,7 @@ class ProductFactory extends Factory
             'price' => round(10 * fake()->randomFloat(2, 10, 100)) / 10,
             'card_game' => fake()->randomElement(CardGame::cases())->value,
             'product_type' => ProductType::OTHER,
-            'category_id' => Category::factory()
+            'category_id' => Category::factory(),
         ];
     }
 

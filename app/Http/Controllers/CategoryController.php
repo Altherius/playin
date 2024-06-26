@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Category\CategoryCreateRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
-use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryWithHierarchyResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;

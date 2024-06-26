@@ -2,10 +2,7 @@
 
 namespace Categories;
 
-use App\Enums\GiftCardStatus;
 use App\Models\Category;
-use App\Models\GiftCard;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;

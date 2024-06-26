@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @property string $name
- * @property int    $category_id
+ * @property int $category_id
  */
 class CategoryUpdateRequest extends FormRequest
 {

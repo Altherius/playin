@@ -19,7 +19,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->words(2, true),
-            'category_id' => null
+            'category_id' => null,
         ];
     }
 

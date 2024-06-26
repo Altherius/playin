@@ -58,7 +58,7 @@ class ProductResource extends JsonResource
             do {
                 array_unshift($properties['breadcrumb'], new CategoryResource($rootCategory));
                 $rootCategory = $rootCategory->parent;
-            } while ($rootCategory->parent);
+            } while ($rootCategory?->parent);
 
             array_unshift($properties['breadcrumb'], new CategoryResource($rootCategory));
         }
