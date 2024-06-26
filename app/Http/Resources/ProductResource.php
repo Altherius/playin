@@ -11,6 +11,7 @@ use App\Models\CardPropertiesLorcana;
 use App\Models\CardPropertiesMagic;
 use App\Models\CardPropertiesYugioh;
 use App\Models\CardRelease;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,6 +29,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property ?BoardgameProperties $boardgame_properties
  * @property ?CardPrintState $card_print_state
  * @property ?CardRelease $card_release
+ * @property ?Category $category
  */
 class ProductResource extends JsonResource
 {
@@ -48,6 +50,18 @@ class ProductResource extends JsonResource
                 'show' => route('products.show', [$this->id]),
             ],
         ];
+
+        if ($this->category) {
+            $rootCategory = $this->category;
+            $properties['breadcrumb'] = [];
+
+            do {
+                array_unshift($properties['breadcrumb'], new CategoryResource($rootCategory));
+                $rootCategory = $rootCategory->parent;
+            } while ($rootCategory->parent);
+
+            array_unshift($properties['breadcrumb'], new CategoryResource($rootCategory));
+        }
 
         if ($this->product_type === ProductType::CARD) {
 
