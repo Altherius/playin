@@ -4,11 +4,27 @@ namespace App\Http\Requests\Category;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use OpenApi\Attributes as OA;
 
 /**
  * @property string $name
  * @property int $category_id
  */
+#[OA\Schema(
+    schema: 'CategoryCreateInput',
+    required: ['name', 'category_id'],
+    properties: [
+        new OA\Property(property: 'name', description: 'The name of the category', type: 'string', nullable: false),
+        new OA\Property(property: 'category_id', description: 'The id of the parent category', type: 'string', nullable: true),
+    ]
+)]
+#[OA\RequestBody(
+    description: 'Request body for creating a category',
+    required: true,
+    content: [
+        new OA\JsonContent(ref: '#/components/schemas/CategoryCreateInput'),
+    ]
+)]
 class CategoryCreateRequest extends FormRequest
 {
     /**

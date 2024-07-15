@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
+use OpenApi\Attributes as OA;
 
 /**
  * @property int $id
@@ -22,6 +23,37 @@ use Illuminate\Support\Collection;
  * @property PaymentMode $payment_mode
  * @property Address $address
  */
+#[OA\Schema(
+    schema: 'Stock',
+    required: ['id', 'retailer', 'validated', 'sent', 'received', 'payment_status', 'payment_mode', 'total_price', 'links'],
+    properties: [
+        new OA\Property(property: 'id', description: 'The ID of the stock', type: 'integer', nullable: false),
+        new OA\Property(property: 'retailer', ref: '#/components/schemas/User', description: 'The stock retailer', nullable: false),
+        new OA\Property(property: 'validated', description: 'Is the stock validated?', type: 'boolean', nullable: false),
+        new OA\Property(property: 'sent', description: 'Is the stock sent?', type: 'boolean', nullable: false),
+        new OA\Property(property: 'received', description: 'Is the stock received?', type: 'boolean', nullable: false),
+        new OA\Property(
+            property: 'payment_status',
+            description: 'The payment status of the stock',
+            type: 'string',
+            enum: [PaymentStatus::AWAITING_PAYMENT, PaymentStatus::PROCESSING_PAYMENT, PaymentStatus::PAYMENT_ACCEPTED, PaymentStatus::PAYMENT_REJECTED],
+            nullable: false
+        ),
+        new OA\Property(
+            property: 'payment_mode',
+            description: 'The payment mode of the stock',
+            type: 'string',
+            enum: [PaymentMode::CASH, PaymentMode::STORE_CREDIT, PaymentMode::PAYPAL],
+            nullable: true
+        ),
+        new OA\Property(property: 'total_price', description: 'The total price of the stock', type: 'float', minimum: 0, nullable: false),
+        new OA\Property(property: 'items', description: 'The items in the stock', type: 'array', items: new OA\Items(ref: '#/components/schemas/StockItem'), nullable: false),
+        new OA\Property(property: 'address', ref: '#/components/schemas/Address', description: 'The address linked to the stock', nullable: true),
+        new OA\Property(property: 'links', description: 'Links related to the stock', required: ['show'], properties: [
+            new OA\Property(property: 'show', description: 'Link to show the stock', type: 'string', format: 'url'),
+        ], type: 'object', nullable: false),
+    ]
+)]
 class StockResource extends JsonResource
 {
     /**
