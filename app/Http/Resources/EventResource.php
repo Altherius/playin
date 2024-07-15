@@ -20,7 +20,7 @@ use OpenApi\Attributes as OA;
  */
 #[OA\Schema(
     schema: 'Event',
-    required: ['id', 'name', 'store'],
+    required: ['id', 'name', 'store', 'start_time', 'end_time', 'max_capacity', 'price'],
     properties: [
         new OA\Property(property: 'id', description: 'The ID of the event', type: 'integer', nullable: false),
         new OA\Property(property: 'name', description: 'The name of the event', type: 'string', example: 'PPTQ Modern', nullable: false),

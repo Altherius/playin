@@ -17,7 +17,7 @@ use OpenApi\Attributes as OA;
  */
 #[OA\Schema(
     schema: 'EventEditInput',
-    required: ['name', 'store_id'],
+    required: ['name', 'store_id', 'start_time', 'end_time', 'max_capacity', 'price'],
     properties: [
         new OA\Property(property: 'name', description: 'The name of the event', type: 'string', nullable: false),
         new OA\Property(property: 'store_id', description: 'The id of the managing store', type: 'integer', nullable: false),

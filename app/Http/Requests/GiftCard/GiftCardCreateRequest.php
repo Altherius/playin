@@ -14,8 +14,8 @@ use OpenApi\Attributes as OA;
     schema: 'GiftCardCreateInput',
     required: ['barcode', 'value'],
     properties: [
-        new OA\Property(property: 'name', description: 'The barcode of the gift card', type: 'string', nullable: false),
-        new OA\Property(property: 'store_id', description: 'The value of the gift card', type: 'float', nullable: false),
+        new OA\Property(property: 'barcode', description: 'The barcode of the gift card', type: 'string', nullable: false),
+        new OA\Property(property: 'value', description: 'The value of the gift card', type: 'float', nullable: false),
     ]
 )]
 #[OA\RequestBody(

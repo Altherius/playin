@@ -15,9 +15,6 @@ use OpenApi\Attributes as OA;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     #[OA\Get(path: '/api/categories', summary: 'Get collection of categories', tags: ['Category'])]
     #[OA\Response(response: '200', description: 'A paginated collection of categories', content: new OA\JsonContent(ref: '#/components/schemas/CategoryPaginatedCollection'))]
     public function index(): AnonymousResourceCollection
@@ -25,9 +22,6 @@ class CategoryController extends Controller
         return CategoryWithHierarchyResource::collection(Category::paginate());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     #[OA\Post(path: '/api/categories', summary: 'Create category', tags: ['Category'])]
     #[OA\RequestBody(ref: '#/components/requestBodies/CategoryCreateRequest')]
     #[OA\Response(response: '201', description: 'The created category', content: new OA\JsonContent(properties: [
@@ -48,9 +42,6 @@ class CategoryController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
     #[OA\Get(path: '/api/categories/{id}', summary: 'Get category', tags: ['Category'])]
     #[OA\Parameter(name: 'id', description: 'The ID of the category', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: '200', description: 'The required category', content: new OA\JsonContent(properties: [
@@ -62,9 +53,6 @@ class CategoryController extends Controller
         return new CategoryWithHierarchyResource($category);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     #[OA\Put(path: '/api/categories/{id}', summary: 'Update category', tags: ['Category'])]
     #[OA\RequestBody(ref: '#/components/requestBodies/CategoryUpdateRequest')]
     #[OA\Parameter(name: 'id', description: 'The ID of the category', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
@@ -83,9 +71,6 @@ class CategoryController extends Controller
         return new CategoryWithHierarchyResource($category);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     #[OA\Delete(path: '/api/categories/{id}', summary: 'Delete category', tags: ['Category'])]
     #[OA\Parameter(name: 'id', description: 'The ID of the category', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: '204', description: 'Category has been deleted successfully')]

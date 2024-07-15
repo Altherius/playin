@@ -41,6 +41,35 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'card_game', description: 'The card game related to the product', type: 'string', enum: ['magic', 'yugioh', 'fab', 'lorcana'], nullable: false),
         new OA\Property(property: 'slug', description: 'The slug of the product', type: 'string', nullable: false),
         new OA\Property(property: 'price', description: 'The default price of the product', type: 'float', minimum: 0, nullable: false),
+        new OA\Property(
+            property: 'card_print_state',
+            ref: '#/components/schemas/CardPrintState',
+            description: 'The card print state of the product, present only if the product is a card',
+            nullable: false
+        ),
+        new OA\Property(
+            property: 'card_release',
+            ref: '#/components/schemas/CardRelease',
+            description: 'The card release of the product, present only if the product is a card',
+            nullable: false
+        ),
+        new OA\Property(
+            property: 'card_properties',
+            description: 'The card properties of the product, present only if the product is a card',
+            nullable: false,
+            oneOf: [
+                new OA\Schema(ref: '#/components/schemas/CardPropertiesMagic'),
+                new OA\Schema(ref: '#/components/schemas/CardPropertiesYugioh'),
+                new OA\Schema(ref: '#/components/schemas/CardPropertiesFab'),
+                new OA\Schema(ref: '#/components/schemas/CardPropertiesLorcana'),
+            ]
+        ),
+        new OA\Property(
+            property: 'boardgame_properties',
+            ref: '#/components/schemas/BoardgameProperties',
+            description: 'The board-game properties of the product, present only if the product is a board-game',
+            nullable: false
+        ),
         new OA\Property(property: 'links', description: 'Links related to the product', properties: [
             new OA\Property(property: 'show', description: 'Link to show the product', type: 'string', format: 'url'),
         ], type: 'object', nullable: false),

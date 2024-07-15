@@ -14,7 +14,7 @@ use OpenApi\Attributes as OA;
     schema: 'StockCreateInput',
     required: ['retailer_id', 'store_id'],
     properties: [
-        new OA\Property(property: 'customer_id', description: 'The retailer linked to the stock', type: 'integer', nullable: false),
+        new OA\Property(property: 'retailer_id', description: 'The retailer linked to the stock', type: 'integer', nullable: false),
         new OA\Property(property: 'store_id', description: 'The store linked to the order', type: 'integer', nullable: false),
     ]
 )]

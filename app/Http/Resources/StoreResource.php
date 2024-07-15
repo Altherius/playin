@@ -12,7 +12,7 @@ use OpenApi\Attributes as OA;
  */
 #[OA\Schema(
     schema: 'Store',
-    required: ['data'],
+    required: ['id', 'name'],
     properties: [
         new OA\Property(property: 'id', description: 'The ID of the store', type: 'integer', nullable: false),
         new OA\Property(property: 'name', description: 'The name of the store', type: 'string', nullable: false),

@@ -17,9 +17,6 @@ class StoreCreditHistoryController extends Controller
         return StoreCreditHistoryResource::collection(StoreCreditHistory::paginate());
     }
 
-    /**
-     * Display the specified resource.
-     */
     #[OA\Get(path: '/api/stores-credit-histories/{id}', summary: 'Get store credit history entry', tags: ['Store Credit History'])]
     #[OA\Parameter(name: 'id', description: 'The ID of the entry', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: '200', description: 'The required entry', content: new OA\JsonContent(properties: [

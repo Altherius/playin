@@ -29,9 +29,6 @@ class EventController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     #[OA\Post(path: '/api/events', summary: 'Create event', tags: ['Event'])]
     #[OA\RequestBody(ref: '#/components/requestBodies/EventCreateRequest')]
     #[OA\Response(response: '201', description: 'The created event', content: new OA\JsonContent(properties: [
@@ -48,9 +45,6 @@ class EventController extends Controller
         return new EventResource($event);
     }
 
-    /**
-     * Display the specified resource.
-     */
     #[OA\Get(path: '/api/events/{id}', summary: 'Get event', tags: ['Event'])]
     #[OA\Parameter(name: 'id', description: 'The ID of the event', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: '200', description: 'The required event', content: new OA\JsonContent(properties: [
@@ -62,9 +56,6 @@ class EventController extends Controller
         return new EventResource($event->load('registrations.user')->loadCount('registrations'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     #[OA\Put(path: '/api/events/{id}', summary: 'Update event', tags: ['Event'])]
     #[OA\RequestBody(ref: '#/components/requestBodies/EventCreateRequest')]
     #[OA\Parameter(name: 'id', description: 'The ID of the event', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]

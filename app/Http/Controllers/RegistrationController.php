@@ -80,7 +80,7 @@ class RegistrationController extends Controller
         return new RegistrationResource($registration);
     }
 
-    #[OA\Delete(path: '/api/registrations/{id}')]
+    #[OA\Delete(path: '/api/registrations/{id}', summary: 'Delete registration', tags: ['Registration'])]
     #[OA\Parameter(name: 'id', description: 'The ID of the registration', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: '204', description: 'Registration deleted successfully')]
     public function destroy(Registration $registration): Response

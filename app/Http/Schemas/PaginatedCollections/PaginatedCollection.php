@@ -6,7 +6,7 @@ use OpenApi\Attributes as OA;
 
 #[OA\Schema(
     schema: 'PaginatedCollection',
-    required: ['data'],
+    required: ['data', 'links', 'meta'],
     properties: [
         new OA\Property(property: 'links', required: ['first', 'last', 'prev', 'next'], properties: [
             new OA\Property(property: 'first', type: 'string', nullable: false),

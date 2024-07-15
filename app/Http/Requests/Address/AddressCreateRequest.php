@@ -16,9 +16,9 @@ use OpenApi\Attributes as OA;
  */
 #[OA\Schema(
     schema: 'AddressEditInput',
-    required: ['name'],
+    required: ['address_name', 'recipient_name', 'street', 'postal_code', 'locality', 'country'],
     properties: [
-        new OA\Property(property: 'address_name', description: 'A descriptive name of the address', type: 'string', example: 'Home', nullable: false),
+        new OA\Property(property: 'address_name', description: 'A descriptive name of the address', type: 'string', example: 'Home', nullable: true),
         new OA\Property(property: 'recipient_name', description: 'The name of the person or service of the address', type: 'string', example: 'John Doe', nullable: false),
         new OA\Property(property: 'street', description: 'The street address', type: 'string', example: '1600 Amphitheatre Pkwy', nullable: false),
         new OA\Property(property: 'postal_code', description: 'The postal code', type: 'string', example: '94043', nullable: false),

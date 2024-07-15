@@ -15,7 +15,7 @@ use OpenApi\Attributes as OA;
  */
 #[OA\Schema(
     schema: 'GiftCard',
-    required: ['id', 'name', 'store'],
+    required: ['id', 'barcode', 'value', 'status'],
     properties: [
         new OA\Property(property: 'id', description: 'The ID of the gift card', type: 'integer', nullable: false),
         new OA\Property(property: 'barcode', description: 'The barcode of the gift card', type: 'string', example: '0000000000000', nullable: false),

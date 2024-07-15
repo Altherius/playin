@@ -25,7 +25,7 @@ use OpenApi\Attributes as OA;
  */
 #[OA\Schema(
     schema: 'Order',
-    required: ['id', 'product', 'quantity', 'unit_price'],
+    required: ['id', 'customer', 'validated', 'sent', 'received', 'payment_status', 'payment_mode', 'total_price', 'links'],
     properties: [
         new OA\Property(property: 'id', description: 'The ID of the order', type: 'integer', nullable: false),
         new OA\Property(property: 'customer', ref: '#/components/schemas/User', description: 'The order customer', nullable: false),
@@ -49,7 +49,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'total_price', description: 'The total price of the order', type: 'float', minimum: 0, nullable: false),
         new OA\Property(property: 'items', description: 'The items in the order', type: 'array', items: new OA\Items(ref: '#/components/schemas/OrderItem'), nullable: false),
         new OA\Property(property: 'address', ref: '#/components/schemas/Address', description: 'The address linked to the order', nullable: true),
-        new OA\Property(property: 'links', description: 'Links related to the order', properties: [
+        new OA\Property(property: 'links', description: 'Links related to the order', required: ['show'], properties: [
             new OA\Property(property: 'show', description: 'Link to show the order', type: 'string', format: 'url'),
         ], type: 'object', nullable: false),
     ]

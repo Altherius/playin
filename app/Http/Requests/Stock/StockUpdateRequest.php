@@ -15,7 +15,7 @@ use OpenApi\Attributes as OA;
  */
 #[OA\Schema(
     schema: 'StockUpdateInput',
-    required: [' validated', 'sent', 'received', 'payment_status', 'payment_mode'],
+    required: ['validated', 'sent', 'received', 'payment_status', 'payment_mode'],
     properties: [
         new OA\Property(property: 'validated', description: 'Is the order validated?', type: 'boolean', nullable: false),
         new OA\Property(property: 'sent', description: 'Is the order sent?', type: 'boolean', nullable: false),

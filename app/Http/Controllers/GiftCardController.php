@@ -104,9 +104,6 @@ class GiftCardController extends Controller
         return new GiftCardResource($giftCard);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     #[OA\Put(path: '/api/gift-cards/{id}', summary: 'Update gift card', tags: ['Gift Card'])]
     #[OA\RequestBody(ref: '#/components/requestBodies/GiftCardUpdateRequest')]
     #[OA\Parameter(name: 'id', description: 'The ID of the gift card', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
