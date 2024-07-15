@@ -1488,13 +1488,18 @@ components:
   schemas:
     AddressEditInput:
       required:
-        - name
+        - address_name
+        - recipient_name
+        - street
+        - postal_code
+        - locality
+        - country
       properties:
         address_name:
           description: 'A descriptive name of the address'
           type: string
           example: Home
-          nullable: false
+          nullable: true
         recipient_name:
           description: 'The name of the person or service of the address'
           type: string
@@ -1575,6 +1580,10 @@ components:
       required:
         - name
         - store_id
+        - start_time
+        - end_time
+        - max_capacity
+        - price
       properties:
         name:
           description: 'The name of the event'
@@ -1610,11 +1619,11 @@ components:
         - barcode
         - value
       properties:
-        name:
+        barcode:
           description: 'The barcode of the gift card'
           type: string
           nullable: false
-        store_id:
+        value:
           description: 'The value of the gift card'
           type: number
           format: float
@@ -1625,11 +1634,11 @@ components:
         - barcode
         - value
       properties:
-        name:
+        barcode:
           description: 'The barcode of the gift card'
           type: string
           nullable: false
-        store_id:
+        value:
           description: 'The value of the gift card'
           type: number
           format: float
@@ -1651,8 +1660,11 @@ components:
       type: object
     OrderUpdateInput:
       required:
-        - customer_id
-        - store_id
+        - validated
+        - sent
+        - received
+        - payment_status
+        - payment_mode
       properties:
         validated:
           description: 'Is the order validated?'
@@ -1756,7 +1768,7 @@ components:
         - retailer_id
         - store_id
       properties:
-        customer_id:
+        retailer_id:
           description: 'The retailer linked to the stock'
           type: integer
           nullable: false
@@ -1767,7 +1779,7 @@ components:
       type: object
     StockUpdateInput:
       required:
-        - ' validated'
+        - validated
         - sent
         - received
         - payment_status
@@ -1839,6 +1851,15 @@ components:
           nullable: false
       type: object
     Address:
+      required:
+        - id
+        - address_name
+        - recipient_name
+        - street
+        - postal_code
+        - locality
+        - country
+        - links
       properties:
         id:
           description: 'The ID of the address'
@@ -1848,7 +1869,7 @@ components:
           description: 'A descriptive name of the address'
           type: string
           example: Home
-          nullable: false
+          nullable: true
         recipient_name:
           description: 'The name of the person or service of the address'
           type: string
@@ -1876,6 +1897,8 @@ components:
           nullable: false
         links:
           description: 'Links related to the address'
+          required:
+            - edit
           properties:
             edit:
               description: 'Link to edit the address'
@@ -2199,6 +2222,10 @@ components:
         - id
         - name
         - store
+        - start_time
+        - end_time
+        - max_capacity
+        - price
       properties:
         id:
           description: 'The ID of the event'
@@ -2243,8 +2270,9 @@ components:
     GiftCard:
       required:
         - id
-        - name
-        - store
+        - barcode
+        - value
+        - status
       properties:
         id:
           description: 'The ID of the gift card'
@@ -2297,9 +2325,14 @@ components:
     Order:
       required:
         - id
-        - product
-        - quantity
-        - unit_price
+        - customer
+        - validated
+        - sent
+        - received
+        - payment_status
+        - payment_mode
+        - total_price
+        - links
       properties:
         id:
           description: 'The ID of the order'
@@ -2356,6 +2389,8 @@ components:
           description: 'The address linked to the order'
         links:
           description: 'Links related to the order'
+          required:
+            - show
           properties:
             show:
               description: 'Link to show the order'
@@ -2479,6 +2514,11 @@ components:
         - retailer
         - validated
         - sent
+        - received
+        - payment_status
+        - payment_mode
+        - total_price
+        - links
       properties:
         id:
           description: 'The ID of the stock'
@@ -2535,6 +2575,8 @@ components:
           description: 'The address linked to the stock'
         links:
           description: 'Links related to the stock'
+          required:
+            - show
           properties:
             show:
               description: 'Link to show the stock'
@@ -2581,7 +2623,8 @@ components:
       type: object
     Store:
       required:
-        - data
+        - id
+        - name
       properties:
         id:
           description: 'The ID of the store'
@@ -2694,6 +2737,8 @@ components:
     PaginatedCollection:
       required:
         - data
+        - links
+        - meta
       properties:
         links:
           required:

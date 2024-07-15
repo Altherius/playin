@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class CardPropertiesMagicController extends Controller
 {
-
     public function index()
     {
         //
