@@ -7,9 +7,12 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
+use OpenApi\Attributes as OA;
 
 class ProductController extends Controller
 {
+    #[OA\Get(path: '/api/products', summary: 'Get collection of products', tags: ['Product'])]
+    #[OA\Response(response: '200', description: 'A paginated collection of products', content: new OA\JsonContent(ref: '#/components/schemas/ProductPaginatedCollection'))]
     public function index(): AnonymousResourceCollection
     {
         return ProductResource::collection(Product::with([
@@ -23,6 +26,13 @@ class ProductController extends Controller
         ])->paginate());
     }
 
+    #[OA\Post(path: '/api/products', summary: 'Create product', tags: ['Product'])]
+    #[OA\RequestBody(ref: '#/components/requestBodies/ProductCreateRequest')]
+    #[OA\Response(response: '201', description: 'The created product', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'data', ref: '#/components/schemas/Product', type: 'object'),
+    ]))]
+    #[OA\Response(response: '400', description: 'Input format is incorrect', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
+    #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function store(ProductCreateRequest $request): ProductResource
     {
         $product = new Product();
@@ -34,6 +44,12 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
+    #[OA\Get(path: '/api/products/{id}', summary: 'Get product', tags: ['Product'])]
+    #[OA\Parameter(name: 'id', description: 'The ID of the product', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: '200', description: 'The required product', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'data', ref: '#/components/schemas/Product', type: 'object'),
+    ]))]
+    #[OA\Response(response: '404', description: 'No product has been found with this ID', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function show(Product $product): ProductResource
     {
         return new ProductResource($product->load([
@@ -47,6 +63,14 @@ class ProductController extends Controller
         ]));
     }
 
+    #[OA\Put(path: '/api/products/{id}', summary: 'Update product', tags: ['Product'])]
+    #[OA\RequestBody(ref: '#/components/requestBodies/ProductCreateRequest')]
+    #[OA\Parameter(name: 'id', description: 'The ID of the product', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: '200', description: 'The updated product', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'data', ref: '#/components/schemas/Product', type: 'object'),
+    ]))]
+    #[OA\Response(response: '400', description: 'Input format is incorrect', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
+    #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function update(ProductCreateRequest $request, Product $product): ProductResource
     {
         $product->name = $request->name;

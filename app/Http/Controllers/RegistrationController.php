@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Models\Registration;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class RegistrationController extends Controller
@@ -16,6 +17,8 @@ class RegistrationController extends Controller
     /**
      * Display a listing of the resource.
      */
+    #[OA\Get(path: '/api/registrations', summary: 'Get collection of registrations', tags: ['Registration'])]
+    #[OA\Response(response: '200', description: 'A paginated collection of registrations', content: new OA\JsonContent(ref: '#/components/schemas/RegistrationPaginatedCollection'))]
     public function index(): AnonymousResourceCollection
     {
         return RegistrationResource::collection(Registration::paginate());
@@ -24,6 +27,13 @@ class RegistrationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    #[OA\Post(path: '/api/registrations', summary: 'Create registration', tags: ['Registration'])]
+    #[OA\RequestBody(ref: '#/components/requestBodies/RegistrationCreateRequest')]
+    #[OA\Response(response: '201', description: 'The created registration', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'data', ref: '#/components/schemas/Registration', type: 'object'),
+    ]))]
+    #[OA\Response(response: '400', description: 'Input format is incorrect', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
+    #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function store(RegistrationCreateRequest $request): RegistrationResource
     {
         $event = Event::withCount('registrations')->find($request->event_id);
@@ -40,17 +50,25 @@ class RegistrationController extends Controller
         return new RegistrationResource($registration);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    #[OA\Get(path: '/api/registrations/{id}', summary: 'Get registration', tags: ['Registration'])]
+    #[OA\Parameter(name: 'id', description: 'The ID of the registration', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: '200', description: 'The required registration', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'data', ref: '#/components/schemas/Registration', type: 'object'),
+    ]))]
+    #[OA\Response(response: '404', description: 'No registration has been found with this ID', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function show(Registration $registration): RegistrationResource
     {
         return new RegistrationResource($registration);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    #[OA\Put(path: '/api/registrations/{id}', summary: 'Update registration', tags: ['Registration'])]
+    #[OA\RequestBody(ref: '#/components/requestBodies/RegistrationUpdateRequest')]
+    #[OA\Parameter(name: 'id', description: 'The ID of the registration', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: '200', description: 'The updated registration', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'data', ref: '#/components/schemas/Registration', type: 'object'),
+    ]))]
+    #[OA\Response(response: '400', description: 'Input format is incorrect', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
+    #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function update(RegistrationUpdateRequest $request, Registration $registration): RegistrationResource
     {
         $registration->user_id = $request->user_id;
@@ -62,9 +80,9 @@ class RegistrationController extends Controller
         return new RegistrationResource($registration);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    #[OA\Delete(path: '/api/registrations/{id}')]
+    #[OA\Parameter(name: 'id', description: 'The ID of the registration', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: '204', description: 'Registration deleted successfully')]
     public function destroy(Registration $registration): Response
     {
         $registration->delete();
