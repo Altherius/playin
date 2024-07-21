@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Product\ProductCreateRequest;
 use App\Http\Resources\ProductResource;
+use App\Models\Media;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class ProductController extends Controller
 {
@@ -42,6 +46,37 @@ class ProductController extends Controller
         $product->save();
 
         return new ProductResource($product);
+    }
+
+    public function storeImage(Product $product, Request $request): ProductResource
+    {
+        if (!$file = $request->file('image')) {
+            throw new BadRequestHttpException('No image found in request');
+        }
+
+        if (!in_array($file->getMimeType(), ['image/jpeg', 'image/png'], true)) {
+            throw new UnprocessableEntityHttpException("Image format is not allowed ({$file->getMimeType()}). Only allowed formats are JPG, PNG and WebP");
+        }
+        
+        $path = $file->storePublicly('public/product-images');
+
+        $media = new Media();
+        $media->file_path = $path;
+        $media->description = null; // TODO: Add media description
+        $media->save();
+
+        $product->media_id = $media->id;
+        $product->save();
+
+        return new ProductResource($product->load([
+            'card_release.card_edition',
+            'card_print_state',
+            'boardgame_properties',
+            'card_properties_magic',
+            'card_properties_yugioh',
+            'card_properties_fab',
+            'card_properties_lorcana',
+        ]));
     }
 
     #[OA\Get(path: '/api/products/{id}', summary: 'Get product', tags: ['Product'])]

@@ -64,6 +64,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Media::class, 'media_id');
+    }
+
     protected function casts(): array
     {
         return [
