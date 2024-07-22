@@ -42,8 +42,11 @@ Route::apiResource('gift-cards', GiftCardController::class)->except('destroy');
 Route::post('/gift-cards/{giftCard}/activate', [GiftCardController::class, 'activate']);
 Route::post('/gift-cards/{giftCard}/consume', [GiftCardController::class, 'consume'])->middleware('auth:sanctum');
 
+Route::apiResource('media', UserController::class)->only('show');
+
 Route::apiResource('orders', OrderController::class)->except('destroy');
 Route::apiResource('products', ProductController::class)->except('destroy');
+Route::post('/products/{product}/image', [ProductController::class, 'storeImage']);
 Route::apiResource('registrations', RegistrationController::class);
 
 Route::apiResource('stock-items', StockItemController::class)->only('store', 'update');

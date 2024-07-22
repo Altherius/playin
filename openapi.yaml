@@ -893,6 +893,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  '/api/products/{id}/image':
+    post:
+      tags:
+        - Product
+      summary: 'Upload product image'
+      operationId: a3b9f64fa79c415aa98b9e4c26d65ac9
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'The ID of the product'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/ProductUploadImageRequest'
+      responses:
+        '200':
+          description: 'The updated product'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data: { $ref: '#/components/schemas/Product' }
+                type: object
+        '422':
+          description: 'Validation error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   '/api/products/{id}':
     get:
       tags:
@@ -1738,6 +1769,20 @@ components:
           minimum: 0
           nullable: false
       type: object
+    ProductUploadImageInput:
+      required:
+        - image
+      properties:
+        image:
+          description: 'The file containing the image of the product'
+          type: string
+          format: binary
+          nullable: false
+        description:
+          description: 'A description of the file'
+          type: string
+          nullable: true
+      type: object
     RegistrationCreateInput:
       required:
         - event_id
@@ -2407,6 +2452,7 @@ components:
         - slug
         - price
         - links
+        - image_url
       properties:
         id:
           description: 'The ID of the product'
@@ -2416,6 +2462,11 @@ components:
           description: 'The name of the product'
           type: string
           nullable: false
+        image_url:
+          description: 'The URL of the product image'
+          type: string
+          format: uri
+          nullable: true
         card_game:
           description: 'The card game related to the product'
           type: string
@@ -2957,6 +3008,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ProductEditInput'
+    ProductUploadImageRequest:
+      description: 'Request body for uploading a product image'
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/ProductUploadImageInput'
     RegistrationCreateRequest:
       description: 'Request body for creating a registration'
       required: true

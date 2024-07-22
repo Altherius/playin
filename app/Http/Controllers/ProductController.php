@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Product\ProductCreateRequest;
+use App\Http\Requests\Product\ProductUploadImageRequest;
 use App\Http\Resources\ProductResource;
+use App\Models\Media;
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
@@ -42,6 +44,37 @@ class ProductController extends Controller
         $product->save();
 
         return new ProductResource($product);
+    }
+
+    #[OA\Post(path: '/api/products/{id}/image', summary: 'Upload product image', tags: ['Product'])]
+    #[OA\RequestBody(ref: '#/components/requestBodies/ProductUploadImageRequest')]
+    #[OA\Parameter(name: 'id', description: 'The ID of the product', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: '200', description: 'The updated product', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'data', ref: '#/components/schemas/Product', type: 'object'),
+    ]))]
+    #[OA\Response(response: '422', description: 'Validation error', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
+    public function storeImage(Product $product, ProductUploadImageRequest $request): ProductResource
+    {
+        $file = $request->file('image');
+        $path = $file->storePublicly('public/product-images');
+
+        $media = new Media();
+        $media->file_path = $path;
+        $media->description = null; // TODO: Add media description
+        $media->save();
+
+        $product->media_id = $media->id;
+        $product->save();
+
+        return new ProductResource($product->load([
+            'card_release.card_edition',
+            'card_print_state',
+            'boardgame_properties',
+            'card_properties_magic',
+            'card_properties_yugioh',
+            'card_properties_fab',
+            'card_properties_lorcana',
+        ]));
     }
 
     #[OA\Get(path: '/api/products/{id}', summary: 'Get product', tags: ['Product'])]
