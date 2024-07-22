@@ -4,6 +4,7 @@ namespace Products;
 
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class ProductsTest extends TestCase
@@ -21,6 +22,30 @@ class ProductsTest extends TestCase
         $product = Product::factory()->create();
 
         $response = $this->get("/api/products/$product->id");
+        $response->assertOk();
+    }
+
+    public function test_products_image_upload(): void
+    {
+        $product = Product::factory()->create();
+
+        $response = $this->post("/api/products/$product->id/image", [
+            'image' => UploadedFile::fake()->image('document.pdf')
+        ], ['Accept' => 'application/json']);
+
+        $response->assertUnprocessable();
+
+
+        $response = $this->post("/api/products/$product->id/image", [
+            'image' => UploadedFile::fake()->image('product.jpg')->size(5000)
+        ], ['Accept' => 'application/json']);
+
+        $response->assertUnprocessable();
+        
+        $response = $this->post("/api/products/$product->id/image", [
+            'image' => UploadedFile::fake()->image('product.jpg')
+        ], ['Accept' => 'application/json']);
+
         $response->assertOk();
     }
 

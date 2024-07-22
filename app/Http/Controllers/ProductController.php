@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Product\ProductCreateRequest;
+use App\Http\Requests\Product\ProductUploadImageRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Media;
 use App\Models\Product;
@@ -48,16 +49,9 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
-    public function storeImage(Product $product, Request $request): ProductResource
+    public function storeImage(Product $product, ProductUploadImageRequest $request): ProductResource
     {
-        if (!$file = $request->file('image')) {
-            throw new BadRequestHttpException('No image found in request');
-        }
-
-        if (!in_array($file->getMimeType(), ['image/jpeg', 'image/png'], true)) {
-            throw new UnprocessableEntityHttpException("Image format is not allowed ({$file->getMimeType()}). Only allowed formats are JPG, PNG and WebP");
-        }
-        
+        $file = $request->file('image');
         $path = $file->storePublicly('public/product-images');
 
         $media = new Media();
