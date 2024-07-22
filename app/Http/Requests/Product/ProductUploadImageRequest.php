@@ -16,7 +16,7 @@ use OpenApi\Attributes\Schema;
     required: ['image'],
     properties: [
         new OA\Property(property: 'image', description: 'The file containing the image of the product', type: 'string', format: 'binary', nullable: false),
-        new OA\Property(property: 'description', description: 'The default price of the product', type: 'string', nullable: true),
+        new OA\Property(property: 'description', description: 'A description of the file', type: 'string', nullable: true),
     ]
 )]
 #[OA\RequestBody(

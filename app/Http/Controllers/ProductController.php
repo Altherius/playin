@@ -49,6 +49,13 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
+    #[OA\Post(path: '/api/products/{id}/image', summary: 'Upload product image', tags: ['Product'])]
+    #[OA\RequestBody(ref: '#/components/requestBodies/ProductUploadImageRequest')]
+    #[OA\Parameter(name: 'id', description: 'The ID of the product', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: '200', description: 'The updated product', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'data', ref: '#/components/schemas/Product', type: 'object'),
+    ]))]
+    #[OA\Response(response: '422', description: 'Validation error', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function storeImage(Product $product, ProductUploadImageRequest $request): ProductResource
     {
         $file = $request->file('image');

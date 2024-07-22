@@ -36,10 +36,11 @@ use OpenApi\Attributes as OA;
  */
 #[OA\Schema(
     schema: 'Product',
-    required: ['id', 'name', 'card_game', 'slug', 'price', 'links'],
+    required: ['id', 'name', 'card_game', 'slug', 'price', 'links', 'image_url'],
     properties: [
         new OA\Property(property: 'id', description: 'The ID of the product', type: 'integer', nullable: false),
         new OA\Property(property: 'name', description: 'The name of the product', type: 'string', nullable: false),
+        new OA\Property(property: 'image_url', description: 'The URL of the product image', type: 'string', format: 'uri', nullable: true),
         new OA\Property(property: 'card_game', description: 'The card game related to the product', type: 'string', enum: ['magic', 'yugioh', 'fab', 'lorcana'], nullable: false),
         new OA\Property(property: 'slug', description: 'The slug of the product', type: 'string', nullable: false),
         new OA\Property(property: 'price', description: 'The default price of the product', type: 'float', minimum: 0, nullable: false),
@@ -88,7 +89,7 @@ class ProductResource extends JsonResource
     {
         $properties = [
             'id' => $this->id,
-            'image' => $this->image ? str_replace('/public', '', asset('media/' . $this->image->file_path)) : null,
+            'image_url' => $this->image ? str_replace('/public', '', asset('media/' . $this->image->file_path)) : null,
             'name' => $this->name,
             'card_game' => $this->card_game,
             'slug' => $this->slug,
