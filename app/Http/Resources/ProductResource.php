@@ -14,7 +14,6 @@ use App\Models\CardRelease;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\URL;
 use OpenApi\Attributes as OA;
 
 /**
@@ -89,7 +88,7 @@ class ProductResource extends JsonResource
     {
         $properties = [
             'id' => $this->id,
-            'image_url' => $this->image ? str_replace('/public', '', asset('media/' . $this->image->file_path)) : null,
+            'image_url' => $this->image ? str_replace('/public', '', asset('media/'.$this->image->file_path)) : null,
             'name' => $this->name,
             'card_game' => $this->card_game,
             'slug' => $this->slug,

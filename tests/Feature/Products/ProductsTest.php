@@ -30,20 +30,19 @@ class ProductsTest extends TestCase
         $product = Product::factory()->create();
 
         $response = $this->post("/api/products/$product->id/image", [
-            'image' => UploadedFile::fake()->image('document.pdf')
+            'image' => UploadedFile::fake()->image('document.pdf'),
         ], ['Accept' => 'application/json']);
 
         $response->assertUnprocessable();
 
-
         $response = $this->post("/api/products/$product->id/image", [
-            'image' => UploadedFile::fake()->image('product.jpg')->size(5000)
+            'image' => UploadedFile::fake()->image('product.jpg')->size(5000),
         ], ['Accept' => 'application/json']);
 
         $response->assertUnprocessable();
-        
+
         $response = $this->post("/api/products/$product->id/image", [
-            'image' => UploadedFile::fake()->image('product.jpg')
+            'image' => UploadedFile::fake()->image('product.jpg'),
         ], ['Accept' => 'application/json']);
 
         $response->assertOk();
