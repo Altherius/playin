@@ -1,6 +1,6 @@
 <?php
 
-namespace Orders;
+namespace Tests\Feature\Orders;
 
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -20,7 +20,7 @@ class OrderItemsTest extends TestCase
         $store = Store::factory()->create();
         $product = Product::factory()->create();
 
-        $order = new Order();
+        $order = new Order;
         $order->customer_id = $customer->id;
         $order->store_id = $store->id;
         $order->save();

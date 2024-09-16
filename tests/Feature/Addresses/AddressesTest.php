@@ -1,6 +1,6 @@
 <?php
 
-namespace Addresses;
+namespace Tests\Feature\Addresses;
 
 use App\Models\Address;
 use App\Models\Order;

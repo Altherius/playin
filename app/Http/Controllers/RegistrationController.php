@@ -41,7 +41,7 @@ class RegistrationController extends Controller
             throw new UnprocessableEntityHttpException('This event is already full');
         }
 
-        $registration = new Registration();
+        $registration = new Registration;
         $registration->user_id = $request->user_id;
         $registration->event_id = $request->event_id;
 

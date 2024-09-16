@@ -34,7 +34,7 @@ class GiftCardController extends Controller
     #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function store(GiftCardCreateRequest $request): JsonResponse
     {
-        $giftCard = new GiftCard();
+        $giftCard = new GiftCard;
 
         $giftCard->barcode = $request->barcode;
         $giftCard->value = $request->value;
@@ -84,7 +84,7 @@ class GiftCardController extends Controller
         $giftCard->status = GiftCardStatus::USED;
         $giftCard->update();
 
-        $storeCreditHistory = new StoreCreditHistory();
+        $storeCreditHistory = new StoreCreditHistory;
         $storeCreditHistory->comment = "Gift card #$giftCard->barcode";
         $storeCreditHistory->credit = $giftCard->value;
         $storeCreditHistory->customer_id = $user->id;

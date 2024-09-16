@@ -18,7 +18,7 @@ final readonly class StockPaymentProcessor
         if ($stock->payment_mode === PaymentMode::STORE_CREDIT) {
             $retailer = $stock->retailer;
 
-            $storeCreditHistory = new StoreCreditHistory();
+            $storeCreditHistory = new StoreCreditHistory;
             $storeCreditHistory->comment = "Stock #{$stock->id}";
             $storeCreditHistory->credit = $stock->total_price();
             $storeCreditHistory->customer_id = $retailer->id;

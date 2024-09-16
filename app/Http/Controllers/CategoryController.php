@@ -31,7 +31,7 @@ class CategoryController extends Controller
     #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function store(CategoryCreateRequest $request): JsonResponse
     {
-        $category = new Category();
+        $category = new Category;
 
         $category->name = $request->name;
         $category->category_id = $request->category_id;

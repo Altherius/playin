@@ -1,6 +1,6 @@
 <?php
 
-namespace Registrations;
+namespace Tests\Feature\Registrations;
 
 use App\Models\Event;
 use App\Models\Registration;

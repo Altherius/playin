@@ -1,6 +1,6 @@
 <?php
 
-namespace GiftCards;
+namespace Tests\Feature\GiftCards;
 
 use App\Enums\GiftCardStatus;
 use App\Models\GiftCard;

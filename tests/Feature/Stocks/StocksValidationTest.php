@@ -1,6 +1,6 @@
 <?php
 
-namespace Stocks;
+namespace Tests\Feature\Stocks;
 
 use App\Models\ProductLocalProperties;
 use App\Models\StockItem;

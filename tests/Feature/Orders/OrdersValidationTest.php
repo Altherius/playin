@@ -1,6 +1,6 @@
 <?php
 
-namespace Orders;
+namespace Tests\Feature\Orders;
 
 use App\Models\OrderItem;
 use App\Models\ProductLocalProperties;
@@ -14,7 +14,7 @@ class OrdersValidationTest extends TestCase
         $item = OrderItem::factory()->create();
         $order = $item->order;
 
-        $localProperties = new ProductLocalProperties();
+        $localProperties = new ProductLocalProperties;
         $localProperties->product_id = $item->product_id;
         $localProperties->store_id = $order->store_id;
         $localProperties->available_quantity = 10;
@@ -36,7 +36,7 @@ class OrdersValidationTest extends TestCase
         $item = OrderItem::factory()->create();
         $order = $item->order;
 
-        $localProperties = new ProductLocalProperties();
+        $localProperties = new ProductLocalProperties;
         $localProperties->product_id = $item->product_id;
         $localProperties->store_id = $item->order->store_id;
         $localProperties->available_quantity = $item->quantity - 1;

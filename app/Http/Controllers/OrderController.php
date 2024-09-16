@@ -27,7 +27,7 @@ class OrderController extends Controller
     #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function store(OrderCreateRequest $request): OrderResource
     {
-        $order = new Order();
+        $order = new Order;
         $order->customer_id = $request->customer_id;
         $order->store_id = $request->store_id;
         $order->save();

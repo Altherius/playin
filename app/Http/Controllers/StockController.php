@@ -38,7 +38,7 @@ class StockController extends Controller
     #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function store(StockCreateRequest $request): StockResource
     {
-        $stock = new Stock();
+        $stock = new Stock;
         $stock->retailer_id = $request->retailer_id;
         $stock->store_id = $request->store_id;
         $stock->save();

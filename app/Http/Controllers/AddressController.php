@@ -33,7 +33,7 @@ class AddressController extends Controller
     #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function addCustomerAddress(AddressCreateRequest $request, User $user): AddressResource
     {
-        $address = new Address();
+        $address = new Address;
         $address = $this->hydrateAddress($address, $request);
         $address->user_id = $user->id;
         $address->save();
@@ -51,7 +51,7 @@ class AddressController extends Controller
     #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function addOrderAddress(AddressCreateRequest $request, Order $order): AddressResource
     {
-        $address = new Address();
+        $address = new Address;
         $address = $this->hydrateAddress($address, $request);
         $address->order_id = $order->id;
         $address->save();
@@ -69,7 +69,7 @@ class AddressController extends Controller
     #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function addStockAddress(AddressCreateRequest $request, Stock $stock): AddressResource
     {
-        $address = new Address();
+        $address = new Address;
         $address = $this->hydrateAddress($address, $request);
         $address->stock_id = $stock->id;
         $address->save();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Orders;
+namespace Tests\Feature\Orders;
 
 use App\Enums\PaymentStatus;
 use App\Models\Order;

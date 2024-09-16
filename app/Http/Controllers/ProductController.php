@@ -37,7 +37,7 @@ class ProductController extends Controller
     #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function store(ProductCreateRequest $request): ProductResource
     {
-        $product = new Product();
+        $product = new Product;
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->price = $request->price;
@@ -58,7 +58,7 @@ class ProductController extends Controller
         $file = $request->file('image');
         $path = $file->storePublicly('public/product-images');
 
-        $media = new Media();
+        $media = new Media;
         $media->file_path = $path;
         $media->description = null; // TODO: Add media description
         $media->save();

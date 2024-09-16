@@ -20,7 +20,7 @@ final readonly class OrderPaymentProcessor
         if ($order->payment_mode === PaymentMode::STORE_CREDIT) {
             $customer = $order->customer;
             if ($customer->store_credit >= $order->total_price()) {
-                $storeCreditHistory = new StoreCreditHistory();
+                $storeCreditHistory = new StoreCreditHistory;
                 $storeCreditHistory->comment = "Order #{$order->id}";
                 $storeCreditHistory->credit = -$order->total_price();
                 $storeCreditHistory->customer_id = $customer->id;

@@ -26,7 +26,7 @@ class StoreController extends Controller
     #[OA\Response(response: '422', description: 'Input data has not been validated', content: new OA\JsonContent(ref: '#/components/schemas/Error'))]
     public function store(StoreCreateRequest $request): StoreResource
     {
-        $store = new Store();
+        $store = new Store;
         $store->name = $request->name;
         $store->save();
 
