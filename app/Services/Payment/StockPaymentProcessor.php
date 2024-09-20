@@ -14,7 +14,7 @@ final readonly class StockPaymentProcessor
      * @throws NotImplementedException If the retailer is using an unsupported payment mode
      */
     public function processPayment(Stock $stock): void
-    {               
+    {
         if ($stock->payment_mode === PaymentMode::STORE_CREDIT) {
             $retailer = $stock->retailer;
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CardPropertiesMagic extends Model
 {
-    use HasFactory, Filterable;
+    use Filterable, HasFactory;
 
     public $table = 'card_properties_magic';
 

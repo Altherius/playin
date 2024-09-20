@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CardPrintState extends Model
 {
-    use HasFactory, Filterable;
+    use Filterable, HasFactory;
 
     public function products(): HasMany
     {

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CardRelease extends Model
 {
-    use HasFactory, Filterable;
+    use Filterable, HasFactory;
 
     public function card_edition(): BelongsTo
     {

@@ -19,7 +19,7 @@ use Laravel\Scout\Searchable;
  */
 class Product extends Model
 {
-    use HasFactory, Searchable, Filterable;
+    use Filterable, HasFactory, Searchable;
 
     public function local_properties(): HasMany
     {
