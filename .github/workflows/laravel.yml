@@ -19,8 +19,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '18.x'
-      - name: Start Meilisearch
-        uses: moy2010/meilisearch-github-action@0.1
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install PHP Dependencies
@@ -35,6 +33,8 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
       - name: Build Vite
         run: npm run build
+      - name: MeiliSearch setup with Docker
+        run: docker run -d -p 7700:7700 getmeili/meilisearch:latest ./meilisearch --no-analytics=true
       - name: Create Database
         run: |
           mkdir -p database
