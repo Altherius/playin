@@ -34,7 +34,7 @@ jobs:
       - name: Build Vite
         run: npm run build
       - name: MeiliSearch setup with Docker
-        run: docker run -d -p 7700:7700 getmeili/meilisearch:latest ./meilisearch --no-analytics=true
+        run: docker run -d -p 7700:7700 getmeili/meilisearch:latest ./meilisearch --master-key="masterKey" --no-analytics=true
       - name: Create Database
         run: |
           mkdir -p database
