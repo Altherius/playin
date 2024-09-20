@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Abbasudo\Purity\Traits\Filterable;
 use App\Enums\CardGame;
 use App\Enums\ProductType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +19,7 @@ use Laravel\Scout\Searchable;
  */
 class Product extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory, Searchable, Filterable;
 
     public function local_properties(): HasMany
     {
