@@ -25,12 +25,12 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
       - name: Update PHP Dependencies
         run: composer update
+      - name: Launch Meilisearch
+        run: docker run -d -p 7700:7700 -v $(pwd)/meili_data:/meili_data getmeili/meilisearch:latest
       - name: Install Js Dependencies
         run: npm install
       - name: Generate key
         run: php artisan key:generate
-      - name: Launch Meilisearch
-        run: docker run -p 7700:7700 -v $(pwd)/meili_data:/meili_data getmeili/meilisearch:latest
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
       - name: Build Vite
