@@ -13,9 +13,13 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
 use OpenApi\Attributes as OA;
 
+use function PHPSTORM_META\type;
+
 class ProductController extends Controller
 {
     #[OA\Get(path: '/api/products', summary: 'Get collection of products', tags: ['Product'])]
+    #[OA\Parameter(in: 'query', name: 'filters', style: 'deepObject', schema: new OA\Schema(type: 'object'))]
+    #[OA\Parameter(in: 'query', name: 'search', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: '200', description: 'A paginated collection of products', content: new OA\JsonContent(ref: '#/components/schemas/ProductPaginatedCollection'))]
     public function index(Request $request): AnonymousResourceCollection
     {
