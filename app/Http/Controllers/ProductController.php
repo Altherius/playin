@@ -13,8 +13,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
 use OpenApi\Attributes as OA;
 
-use function PHPSTORM_META\type;
-
 class ProductController extends Controller
 {
     #[OA\Get(path: '/api/products', summary: 'Get collection of products', tags: ['Product'])]
