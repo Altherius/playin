@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Abbasudo\Purity\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BoardgameProperties extends Model
 {
-    use HasFactory;
+    use Filterable, HasFactory;
 
     public function products(): HasMany
     {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Abbasudo\Purity\Traits\Filterable;
 use App\Enums\CardGrading;
 use App\Enums\CardLanguage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CardPrintState extends Model
 {
-    use HasFactory;
+    use Filterable, HasFactory;
 
     public function products(): HasMany
     {

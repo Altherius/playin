@@ -7,6 +7,8 @@ use App\Http\Requests\Product\ProductUploadImageRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Media;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
 use OpenApi\Attributes as OA;
@@ -15,9 +17,23 @@ class ProductController extends Controller
 {
     #[OA\Get(path: '/api/products', summary: 'Get collection of products', tags: ['Product'])]
     #[OA\Response(response: '200', description: 'A paginated collection of products', content: new OA\JsonContent(ref: '#/components/schemas/ProductPaginatedCollection'))]
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
-        return ProductResource::collection(Product::with([
+        if ($request->search) {
+            return ProductResource::collection(
+                Product::search($request->search)->query(fn (Builder $query) => $query->filter()->with([
+                    'card_release.card_edition',
+                    'card_print_state',
+                    'boardgame_properties',
+                    'card_properties_magic',
+                    'card_properties_yugioh',
+                    'card_properties_fab',
+                    'card_properties_lorcana',
+                ]))->paginate()
+            );
+        }
+
+        return ProductResource::collection(Product::filter()->with([
             'card_release.card_edition',
             'card_print_state',
             'boardgame_properties',
