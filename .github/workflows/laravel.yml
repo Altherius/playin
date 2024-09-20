@@ -16,7 +16,6 @@ jobs:
         with:
           php-version: '8.2'
       - uses: actions/checkout@v4
-      - uses: moy2010/meilisearch-github-action@0.1.4
       - uses: actions/setup-node@v4
         with:
           node-version: '18.x'
@@ -30,6 +29,8 @@ jobs:
         run: npm install
       - name: Generate key
         run: php artisan key:generate
+      - name: Launch Meilisearch
+        run: docker run -p 7700:7700 -v $(pwd)/meili_data:/meili_data getmeili/meilisearch:latest
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
       - name: Build Vite
